@@ -26,7 +26,7 @@
       flex-direction: column;
       align-items: center;
       margin-top: 40px;
-      padding-bottom: 40px; /* Abstand unten hinzugefügt */
+      padding-bottom: 40px;
     }
 
     .logo {
@@ -45,12 +45,12 @@
     }
 
     .title .break {
-      white-space: nowrap; /* Verhindert, dass "Group Ride" auseinanderbricht */
+      white-space: nowrap;
     }
 
     @media (max-width: 500px) {
       .title .break {
-        display: block; /* Auf kleinen Bildschirmen neue Zeile nach "City" */
+        display: block;
       }
     }
 
@@ -75,6 +75,27 @@
       height: 700px;
       border-radius: 12px;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+      margin-bottom: 40px; /* Abstand zum Footer */
+    }
+
+    /* Footer */
+    footer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px; /* Abstand zwischen Icons */
+      margin-top: 40px; /* Abstand zum Komoot iFrame */
+      margin-bottom: 40px; /* Abstand nach unten */
+    }
+
+    footer a img {
+      width: 36px;
+      height: 36px;
+      transition: transform 0.2s ease;
+    }
+
+    footer a img:hover {
+      transform: scale(1.1);
     }
   </style>
 </head>
@@ -98,6 +119,18 @@
       allowfullscreen>
     </iframe>
   </div>
+
+  <footer>
+    <a href="https://www.strava.com/clubs/1035544" target="_blank" aria-label="Strava">
+      <img src="images/strava.png" alt="Strava Logo">
+    </a>
+    <a href="https://www.instagram.com/saint.city.group.ride" target="_blank" aria-label="Instagram">
+      <img src="images/insta.png" alt="Instagram Logo">
+    </a>
+    <a href="https://www.komoot.com/de-de/user/3038225045944" target="_blank" aria-label="Komoot">
+      <img src="images/komoot.png" alt="Komoot Logo">
+    </a>
+  </footer>
 
 </body>
 </html>
