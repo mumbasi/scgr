@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Falls du eine Sitemap hinzufügst, Google darauf hinweisen
+Sitemap: https://www.scrg.cc/sitemap.xml
