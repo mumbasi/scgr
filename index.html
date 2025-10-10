@@ -44,6 +44,16 @@
       line-height: 1.2;
     }
 
+    .title .break {
+      white-space: nowrap; /* Verhindert, dass "Group Ride" auseinanderbricht */
+    }
+
+    @media (max-width: 500px) {
+      .title .break {
+        display: block; /* Auf kleinen Bildschirmen neue Zeile nach "City" */
+      }
+    }
+
     .subtitle {
       font-size: 1.3rem;
       font-weight: 500;
@@ -73,7 +83,10 @@
   <div class="container">
     <img src="logo.png" alt="Saint City Group Ride Logo" class="logo">
 
-    <div class="title">Saint City<wbr> Group Ride</div>
+    <div class="title">
+      Saint City <span class="break">Group Ride</span>
+    </div>
+    
     <div class="subtitle">Group Ride in St. Gallen</div>
     <div class="details">Dienstag – Gallusplatz – 18:30 Uhr</div>
 
