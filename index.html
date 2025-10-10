@@ -1,34 +1,77 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Meine Website</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saint City Group Ride</title>
+
+  <!-- Google Font (modern, ähnlich "Telegraf") -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
   <style>
-    /* Seite weiß und zentriert gestalten */
     body {
       background-color: #ffffff;
+      color: #111;
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
       margin: 0;
-      height: 100vh;
+      padding: 0;
+    }
+
+    .container {
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start; /* Oben etwas Platz */
-      padding-top: 100px; /* Abstand von oben */
-      font-family: system-ui, sans-serif;
+      margin-top: 80px;
     }
 
-    img {
-      max-width: 200px; /* Logo nicht zu groß */
+    .logo {
+      width: 160px;
+      max-width: 60%;
       height: auto;
+      margin-bottom: 30px;
+    }
+
+    .title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      letter-spacing: 0.5px;
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      font-weight: 500;
+      margin-bottom: 40px;
+      color: #444;
+    }
+
+    iframe {
+      border: none;
+      width: 90%;
+      max-width: 640px;
+      height: 700px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
     }
   </style>
 </head>
 <body>
-  <!-- Dein Logo -->
-  <img src="logo.png" alt="Mein Logo" />
 
-  <!-- Optionaler Text unter dem Logo -->
-  <!-- <p>Willkommen auf meiner Website</p> -->
+  <div class="container">
+    <img src="logo.png" alt="Saint City Group Ride Logo" class="logo">
+
+    <div class="title">Saint City Group Ride</div>
+    <div class="subtitle">Gallusplatz St. Gallen – Dienstags 18:30 Uhr</div>
+
+    <iframe 
+      src="https://www.komoot.com/de-de/tour/2609697042/embed?share_token=a1Sr6FyXuprJ6h9G8vlrgBgz5xrM7fnYFd60aWWl58vtO3umov&profile=1"
+      frameborder="0"
+      scrolling="no"
+      loading="lazy"
+      allowfullscreen>
+    </iframe>
+  </div>
+
 </body>
 </html>
