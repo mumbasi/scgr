@@ -42,7 +42,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
 
   <style>
     body {
@@ -112,14 +112,16 @@
     }
 
     /* Footer */
-    footer {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 60px; /* Abstand zwischen Icons */
-      margin-top: 20px; /* Abstand zum Komoot iFrame */
-      margin-bottom: 40px; /* Abstand nach unten */
-    }
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 60px; /* Abstand zwischen Icons */
+  margin-top: 10px; /* Abstand zum Komoot iFrame */
+  margin-bottom: 0px; /* Abstand nach unten */
+  background-color: #caaad1; /* Neue Hintergrundfarbe */
+  padding: 20px 0; /* etwas vertikaler Abstand im Footer */
+}
 
     footer a img {
       width: 36px;
@@ -128,14 +130,14 @@
     }
 
     footer a img:hover {
-      transform: scale(1.1);
+      transform: scale(0.9);
     }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <img src="logo.png" alt="Saint City Group Ride Logo" class="logo">
+    <img src="assets/logo.png" alt="Saint City Group Ride Logo" class="logo">
 
     <div class="title">
       Saint City <span class="break">Group Ride</span>
@@ -155,19 +157,18 @@
 
   <footer>
     <a href="https://www.strava.com/clubs/1035544" target="_blank" aria-label="Strava">
-      <img src="strava.png" alt="Strava Logo">
+      <img src="assets/strava.svg" alt="Strava Logo">
     </a>
     <a href="https://www.instagram.com/saint.city.group.ride" target="_blank" aria-label="Instagram">
-      <img src="insta.png" alt="Instagram Logo">
+      <img src="assets/insta.svg" alt="Instagram Logo">
     </a>
     <a href="https://www.komoot.com/de-de/user/3038225045944" target="_blank" aria-label="Komoot">
-      <img src="komoot.png" alt="Komoot Logo">
+      <img src="assets/komoot.svg" alt="Komoot Logo">
     </a>
     <a href="https://chat.whatsapp.com/FJpBbhdmwA45sXABGy12Xm" target="_blank" aria-label="Whatsapp">
-      <img src="whatsapp.png" alt="Whatsapp Logo">
+      <img src="assets/whatsapp.svg" alt="Whatsapp Logo">
     </a>
   </footer>
 
 </body>
 </html>
-
