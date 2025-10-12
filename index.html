@@ -5,33 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Saint City Group Ride</title>
 
-  <meta name="description" content="SCGR - Saint City Group Ride – Group Ride in St. Gallen. Jeden Dienstag um 18:30 Uhr am Gallusplatz">
-  <meta name="keywords" content="Saint City Group Ride, SCGR, St. Gallen, Fahrrad, Cycling, Group Ride, Strava, Komoot">
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "name": "Saint City Group Ride",
-    "alternateName": "SCGR",
-    "sport": "Cycling",
-    "url": "https://www.scgr.cc",
-    "sameAs": [
-      "https://www.strava.com/clubs/1035544",
-      "https://www.instagram.com/saint.city.group.ride",
-      "https://www.komoot.com/de-de/user/3038225045944"
-    ],
-    "location": {
-      "@type": "Place",
-      "name": "Gallusplatz",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "St. Gallen",
-        "addressCountry": "CH"
-      }
-    }
-  }
-  </script>
-
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" href="assets/favicon.png">
 
@@ -40,84 +13,166 @@
       background-color: #ffffff;
       color: #111;
       font-family: 'Poppins', sans-serif;
-      text-align: center;
       margin: 0;
       padding: 0;
     }
 
-    .container {
+    /* HEADER --------------------------------------------- */
+    .header {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 28px;
+      padding: 40px 5%;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    .header-left img {
+      width: 200px;
+      height: auto;
+      flex-shrink: 0;
+    }
+
+    .header-text {
+      text-align: left;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      margin-top: 40px;
-      padding-bottom: 40px;
+      justify-content: center;
     }
 
-    .logo {
-      width: 160px;
-      max-width: 60%;
-      height: auto;
-      margin-bottom: 0px;
-    }
-
-    h1.title {
-      font-size: 2.7rem;
+    .header-text h1 {
+      font-size: 2.8rem;
       font-weight: 900;
-      margin-bottom: 20px;
+      margin: 0 0 10px;
       letter-spacing: 0.1px;
-      line-height: 1.2;
       color: #caaad1;
-    }
-
-    .title .break {
-      white-space: nowrap;
-    }
-
-    @media (max-width: 500px) {
-      .title .break {
-        display: block;
-      }
+      line-height: 1.2;
     }
 
     .subtitle {
-      font-size: 1.0rem;
+      font-size: 1rem;
       font-weight: 600;
       margin-bottom: 5px;
       color: #4b3f54;
     }
 
     .details {
-      font-size: 1.0rem;
+      font-size: 1rem;
       font-weight: 300;
-      margin-bottom: 40px;
       color: #4b3f54;
     }
 
-    iframe {
-      border: none;
+    /* Mobile Ansicht */
+    @media (max-width: 700px) {
+      .header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .header-text {
+        text-align: center;
+        align-items: center;
+      }
+      .header-left img {
+        width: 160px;
+      }
+    }
+
+    /* SECTION --------------------------------------------- */
+    .ride-section {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 24px;
       width: 90%;
+      max-width: 1300px;
+      margin: 20px auto 40px;
+    }
+
+    .ride-info {
+      flex: 1 1 600px;
+      max-width: 640px;
+      background-color: #b38dbb; /* dunklere Version von SCGR Rosa */
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
+      padding: 28px;
+      text-align: left;
+      color: #fff;
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 40px;
+      position: relative;
+    }
+
+    .ride-info h3 {
+      color: #fff;
+      margin-top: 0;
+      font-size: 1.5rem;
+    }
+
+    .route-hint {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 40px;
+      font-weight: 600;
+      color: #fff;
+      font-size: 1.1rem;
+    }
+
+    .route-hint span.arrow {
+      display: inline-block;
+      transition: transform 0.3s ease;
+      font-size: 1.4rem;
+    }
+
+    /* iframe Overlay -------------------------------------- */
+    .iframe-overlay {
+      position: relative;
+      flex: 1 1 600px;
       max-width: 640px;
       height: 700px;
       border-radius: 12px;
+      overflow: hidden;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
-      margin-bottom: 0px;
     }
 
-    /* Footer */
+    .iframe-overlay iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 12px;
+      display: block;
+    }
+
+    .iframe-overlay .overlay {
+      position: absolute;
+      inset: 0;
+      background-color: rgba(202, 170, 209, 0.15);
+      pointer-events: none;
+    }
+
+    @media (max-width: 900px) {
+      .route-hint span.arrow {
+        transform: rotate(90deg);
+      }
+    }
+
+    /* FOOTER ---------------------------------------------- */
     footer {
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 60px;
-      margin-top: 10px;
-      margin-bottom: 0px;
+      gap: 40px;
       background-color: #caaad1;
-      padding: 20px 0;
+      padding: 18px 0;
     }
 
     footer a img {
-      width: 30px;
-      height: 30px;
+      width: 24px;
+      height: 24px;
       transition: transform 0.2s ease;
     }
 
@@ -128,25 +183,46 @@
 </head>
 <body>
 
-  <div class="container">
-    <img src="assets/logo.png" alt="Saint City Group Ride Logo" class="logo">
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-left">
+      <img src="assets/logo.png" alt="Saint City Group Ride Logo">
+    </div>
+    <div class="header-text">
+      <h1>Saint City Group Ride</h1>
+      <div class="subtitle">Rennvelo & Gravel Group Ride in St. Gallen</div>
+      <div class="details">
+        Jeden Dienstag während der Sommerzeit<br>
+        18:30 Uhr – Gallusplatz
+      </div>
+    </div>
+  </header>
 
-    <h1 class="title">
-      Saint City <span class="break">Group Ride</span>
-    </h1>
-    
-    <div class="subtitle">Rennvelo & Gravel Group Ride in St. Gallen</div>
-    <div class="details">
-	Jeden Dienstag während der Sommerzeit
-<br>18:30 Uhr - Gallusplatz
-</div>
+  <!-- CONTENT -->
+  <section class="ride-section">
+    <div class="ride-info">
+      <h3>Nächster Ride:</h3>
+      <p>📅 <strong>14.10.2025</strong></p>
+      <p>🏁 <strong>Geschwindigkeiten:</strong><br>
+      Espresso🚀 ca. 29 km/h<br>
+      Cappuccino☕ ca. 24–26 km/h<br>
+      Ovomaltine🥛 ca. 21 km/h</p>
 
-    <iframe src="https://www.komoot.com/de-de/tour/2629995489/embed?share_token=aiqEcBWir7XmN8asLsaCI1R7E4cHnBT0bYPVVsvJ1nb7mI6zKW&profile=1" 
-		width="100%" 
-		height="700" frameborder="0" 
-		scrolling="no"></iframe>
-  </div>
+      <p>🚫 <strong>Kein Rennen!</strong><br>
+      Es ist ein Social Ride. Wenn du ballern willst, fahr Espresso 🚀😉</p>
 
+      <p>🍻💬 Im Anschluss gibt’s Getränke im <strong>Kafi Otmar</strong></p>
+
+      <div class="route-hint">Route <span class="arrow">→</span></div>
+    </div>
+
+    <div class="iframe-overlay">
+      <iframe src="https://www.komoot.com/de-de/tour/2629995489/embed?share_token=aiqEcBWir7XmN8asLsaCI1R7E4cHnBT0bYPVVsvJ1nb7mI6zKW&profile=1" scrolling="no"></iframe>
+      <div class="overlay"></div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
   <footer>
     <a href="https://www.strava.com/clubs/1035544" target="_blank" aria-label="Strava">
       <img src="assets/strava.svg" alt="Strava Logo">
@@ -164,4 +240,3 @@
 
 </body>
 </html>
-
