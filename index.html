@@ -8,20 +8,40 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" href="assets/favicon.png">
 
+  <!-- SEO -->
+  <meta name="description" content="Saint City Group Ride – Der Social Ride für Rennvelo & Gravel in St. Gallen. Jeden Dienstag um 18:30 Uhr am Gallusplatz. Drei Gruppen: Espresso, Cappuccino & Ovomaltine. Join the ride!">
+  <meta property="og:title" content="Saint City Group Ride">
+  <meta property="og:description" content="Rennvelo & Gravel Group Ride in St. Gallen – Jeden Dienstag 18:30 Uhr am Gallusplatz. Social Ride, drei Geschwindigkeiten, kalte Getränke danach 🍻">
+  <meta property="og:image" content="https://scgr.cc/assets/og-image.jpg">
+  <meta property="og:url" content="https://scgr.cc/">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Structured Data für Google -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Saint City Group Ride",
+    "url": "https://scgr.cc",
+    "logo": "https://scgr.cc/assets/logo.png"
+  }
+  </script>
+
   <style>
-    /* Grundlayout --------------------------------------------- */
     html, body {
       height: 100%;
-      margin: 0;
-      padding: 0;
     }
 
     body {
-      display: flex;
-      flex-direction: column;
       background-color: #ffffff;
       color: #111;
       font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
     main {
@@ -122,7 +142,6 @@
       background: linear-gradient(135deg, #3fffab, #5b5bff, #a93fff, #3fffab);
       background-size: 300% 300%;
       animation: gradientShift 8s ease infinite;
-      margin-bottom: 40px;
     }
 
     .ride-info h3 {
@@ -137,20 +156,14 @@
       margin: 20px 0;
     }
 
-    .ride-info p:last-of-type {
-      margin-bottom: 0;
-    }
-
-    /* Rosa Link ohne Unterstrich */
     .ride-info a {
-      color: #ffccf2;
+      color: #caaad1;
       text-decoration: none;
       font-weight: 600;
     }
 
     .ride-info a:hover {
-      text-decoration: underline;
-      color: #ffffff;
+      opacity: 0.8;
     }
 
     .route-hint {
@@ -193,35 +206,26 @@
       .ride-section {
         flex-direction: column;
         align-items: center;
-        gap: 40px;
       }
 
       .ride-info,
       .iframe-overlay {
         width: 100%;
         max-width: 90%;
-        margin: 0 auto;
-        box-sizing: border-box;
       }
 
       .ride-info {
         padding: 24px 28px 40px 28px;
-        margin-bottom: 0;
+        margin-bottom: 40px;
+      }
+
+      .iframe-overlay iframe {
+        aspect-ratio: 16 / 9;
+        min-height: unset;
       }
 
       .route-hint span.arrow {
         transform: rotate(90deg);
-      }
-    }
-
-    /* EXTRA SMALL DEVICES (unter 500px) ---------------------- */
-    @media (max-width: 500px) {
-      .ride-info {
-        padding: 20px 24px 28px 24px;
-      }
-
-      .ride-section {
-        gap: 28px;
       }
     }
 
@@ -233,7 +237,7 @@
       gap: 40px;
       background-color: #caaad1;
       padding: 18px 0;
-      margin-top: auto; /* drückt Footer an das Seitenende */
+      margin-top: auto;
     }
 
     footer a img {
@@ -281,7 +285,9 @@
         <p>🚫 <strong>Kein Rennen!</strong><br>
         Es ist ein Social Ride. Wenn du ballern willst, fahr Espresso 🚀😉</p>
 
-        <p>🍻💬 Im Anschluss gibt’s Getränke im <strong><a href="https://kafi-otmar.ch/" target="_blank" rel="noopener">Kafi Otmar</a></strong></p>
+        <p>🍻💬 Im Anschluss gibt’s Getränke im 
+          <a href="https://kafi-otmar.ch/" target="_blank" rel="noopener">Kafi Otmar</a>
+        </p>
 
         <div class="route-hint">Route <span class="arrow">→</span></div>
       </div>
