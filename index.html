@@ -9,12 +9,25 @@
   <link rel="icon" type="image/png" href="assets/favicon.png">
 
   <style>
+    /* Grundlayout --------------------------------------------- */
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
+      display: flex;
+      flex-direction: column;
       background-color: #ffffff;
       color: #111;
       font-family: 'Poppins', sans-serif;
-      margin: 0;
-      padding: 0;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
     }
 
     /* HEADER --------------------------------------------- */
@@ -63,7 +76,6 @@
       color: #4b3f54;
     }
 
-    /* Mobile Ansicht */
     @media (max-width: 700px) {
       .header {
         flex-direction: column;
@@ -82,84 +94,136 @@
     /* SECTION --------------------------------------------- */
     .ride-section {
       display: flex;
-      flex-wrap: wrap;
       justify-content: center;
       align-items: flex-start;
       gap: 24px;
       width: 90%;
       max-width: 1300px;
-      margin: 20px auto 40px;
+      margin: 20px auto 60px;
+      flex-wrap: nowrap;
     }
 
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* INFOBOX --------------------------------------------- */
     .ride-info {
-      flex: 1 1 600px;
-      max-width: 640px;
-      background-color: #b38dbb; /* dunklere Version von SCGR Rosa */
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
-      padding: 28px;
-      text-align: left;
+      flex: 1;
+      border-radius: 16px;
+      padding: 24px 32px 40px 32px;
       color: #fff;
-      font-size: 1rem;
+      font-weight: 500;
       line-height: 1.6;
+      text-align: left;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+      background: linear-gradient(135deg, #3fffab, #5b5bff, #a93fff, #3fffab);
+      background-size: 300% 300%;
+      animation: gradientShift 8s ease infinite;
       margin-bottom: 40px;
-      position: relative;
     }
 
     .ride-info h3 {
-      color: #fff;
-      margin-top: 0;
-      font-size: 1.5rem;
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin: 0 0 12px;
+      text-transform: uppercase;
+    }
+
+    .ride-info p {
+      font-size: 1rem;
+      margin: 20px 0;
+    }
+
+    .ride-info p:last-of-type {
+      margin-bottom: 0;
+    }
+
+    /* Rosa Link ohne Unterstrich */
+    .ride-info a {
+      color: #ffccf2;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .ride-info a:hover {
+      text-decoration: underline;
+      color: #ffffff;
     }
 
     .route-hint {
       display: flex;
       align-items: center;
       gap: 8px;
-      margin-top: 40px;
+      margin-top: 18px;
       font-weight: 600;
       color: #fff;
       font-size: 1.1rem;
+      transition: transform 0.3s ease;
     }
 
     .route-hint span.arrow {
+      font-size: 1.4rem;
       display: inline-block;
       transition: transform 0.3s ease;
-      font-size: 1.4rem;
     }
 
-    /* iframe Overlay -------------------------------------- */
+    /* IFRAME BOX -------------------------------------- */
     .iframe-overlay {
-      position: relative;
-      flex: 1 1 600px;
-      max-width: 640px;
-      height: 700px;
-      border-radius: 12px;
+      flex: 1;
+      border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      display: flex;
     }
 
     .iframe-overlay iframe {
       width: 100%;
       height: 100%;
+      min-height: 520px;
       border: none;
-      border-radius: 12px;
       display: block;
+      border-radius: 16px;
     }
 
-    .iframe-overlay .overlay {
-      position: absolute;
-      inset: 0;
-      background-color: rgba(202, 170, 209, 0.15);
-      pointer-events: none;
+    /* MOBILE -------------------------------------- */
+    @media (max-width: 899px) {
+      .ride-section {
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+      }
+
+      .ride-info,
+      .iframe-overlay {
+        width: 100%;
+        max-width: 90%;
+        margin: 0 auto;
+        box-sizing: border-box;
+      }
+
+      .ride-info {
+        padding: 24px 28px 40px 28px;
+        margin-bottom: 0;
+      }
+
+      .route-hint span.arrow {
+        transform: rotate(90deg);
+      }
     }
 
-    @media (max-width: 1422px) {
-  .route-hint span.arrow {
-    transform: rotate(90deg);
-  }
-}
+    /* EXTRA SMALL DEVICES (unter 500px) ---------------------- */
+    @media (max-width: 500px) {
+      .ride-info {
+        padding: 20px 24px 28px 24px;
+      }
 
+      .ride-section {
+        gap: 28px;
+      }
+    }
 
     /* FOOTER ---------------------------------------------- */
     footer {
@@ -169,6 +233,7 @@
       gap: 40px;
       background-color: #caaad1;
       padding: 18px 0;
+      margin-top: auto; /* drückt Footer an das Seitenende */
     }
 
     footer a img {
@@ -182,46 +247,50 @@
     }
   </style>
 </head>
+
 <body>
 
-  <!-- HEADER -->
-  <header class="header">
-    <div class="header-left">
-      <img src="assets/logo.png" alt="Saint City Group Ride Logo">
-    </div>
-    <div class="header-text">
-      <h1>Saint City Group Ride</h1>
-      <div class="subtitle">Rennvelo & Gravel Group Ride in St. Gallen</div>
-      <div class="details">
-        Jeden Dienstag während der Sommerzeit<br>
-        18:30 Uhr – Gallusplatz
+  <main>
+    <!-- HEADER -->
+    <header class="header">
+      <div class="header-left">
+        <img src="assets/logo.png" alt="Saint City Group Ride Logo">
       </div>
-    </div>
-  </header>
+      <div class="header-text">
+        <h1>Saint City Group Ride</h1>
+        <div class="subtitle">Rennvelo & Gravel Group Ride in St. Gallen</div>
+        <div class="details">
+          Jeden Dienstag während der Sommerzeit<br>
+          18:30 Uhr – Gallusplatz
+        </div>
+      </div>
+    </header>
 
-  <!-- CONTENT -->
-  <section class="ride-section">
-    <div class="ride-info">
-      <h3>Nächster Ride:</h3>
-      <p>📅 <strong>14.10.2025 - 18:30 Uhr</strong></p>
-      <p>🏁 <strong>Geschwindigkeiten:</strong><br>
-      Espresso🚀 ca. 29 km/h<br>
-      Cappuccino☕ ca. 23–26 km/h<br>
-      Ovomaltine🥛 ca. 21 km/h</p>
+    <!-- CONTENT -->
+    <section class="ride-section">
+      <div class="ride-info">
+        <h3>Nächster Ride:</h3>
+        <p>📅 <strong>14.10.2025 – 18:30 Uhr</strong></p>
+        <p>📍 <strong>Gallusplatz, St. Gallen</strong></p>
+        <p>🏁 <strong>Geschwindigkeiten:</strong><br>
+          Espresso 🚀 ca. 29 km/h<br>
+          Cappuccino ☕ ca. 23–26 km/h<br>
+          Ovomaltine 🥛 ca. 21 km/h
+        </p>
 
-      <p>🚫 <strong>Kein Rennen!</strong><br>
-      Es ist ein Social Ride. Wenn du ballern willst, fahr Espresso 🚀😉</p>
+        <p>🚫 <strong>Kein Rennen!</strong><br>
+        Es ist ein Social Ride. Wenn du ballern willst, fahr Espresso 🚀😉</p>
 
-      <p>🍻💬 Im Anschluss gibt’s Getränke im <strong>Kafi Otmar</strong></p>
+        <p>🍻💬 Im Anschluss gibt’s Getränke im <strong><a href="https://kafi-otmar.ch/" target="_blank" rel="noopener">Kafi Otmar</a></strong></p>
 
-      <div class="route-hint">Route <span class="arrow">→</span></div>
-    </div>
+        <div class="route-hint">Route <span class="arrow">→</span></div>
+      </div>
 
-    <div class="iframe-overlay">
-      <iframe src="https://www.komoot.com/de-de/tour/2629995489/embed?share_token=aiqEcBWir7XmN8asLsaCI1R7E4cHnBT0bYPVVsvJ1nb7mI6zKW&profile=1" scrolling="no"></iframe>
-      <div class="overlay"></div>
-    </div>
-  </section>
+      <div class="iframe-overlay">
+        <iframe src="https://www.komoot.com/de-de/tour/2629995489/embed?share_token=aiqEcBWir7XmN8asLsaCI1R7E4cHnBT0bYPVVsvJ1nb7mI6zKW&profile=1" scrolling="no"></iframe>
+      </div>
+    </section>
+  </main>
 
   <!-- FOOTER -->
   <footer>
@@ -241,4 +310,3 @@
 
 </body>
 </html>
-
