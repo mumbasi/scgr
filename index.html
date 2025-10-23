@@ -31,14 +31,14 @@
   <style>
     html, body {
       height: 100%;
+      margin: 0;
+      padding: 0;
     }
 
     body {
       background-color: #ffffff;
       color: #111;
       font-family: 'Poppins', sans-serif;
-      margin: 0;
-      padding: 0;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
@@ -48,6 +48,7 @@
       flex: 1;
       display: flex;
       flex-direction: column;
+      align-items: center;
     }
 
     /* HEADER --------------------------------------------- */
@@ -64,21 +65,12 @@
     .header-left img {
       width: 200px;
       height: auto;
-      flex-shrink: 0;
-    }
-
-    .header-text {
-      text-align: left;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
     }
 
     .header-text h1 {
       font-size: 2.8rem;
       font-weight: 900;
       margin: 0 0 10px;
-      letter-spacing: 0.1px;
       color: #caaad1;
       line-height: 1.2;
     }
@@ -86,7 +78,6 @@
     .subtitle {
       font-size: 1rem;
       font-weight: 600;
-      margin-bottom: 5px;
       color: #4b3f54;
     }
 
@@ -102,25 +93,28 @@
         align-items: center;
         text-align: center;
       }
-      .header-text {
-        text-align: center;
-        align-items: center;
-      }
       .header-left img {
         width: 160px;
       }
     }
 
-    /* SECTION --------------------------------------------- */
-    .ride-section {
+    /* COUNTDOWN BOX --------------------------------------------- */
+    .countdown-box {
+      border-radius: 20px;
+      padding: 60px 40px;
+      color: #fff;
+      text-align: center;
+      font-weight: 600;
+      background: linear-gradient(135deg, #ff4d79, #ff7b3f, #ff4dc4, #ff4d79);
+      background-size: 300% 300%;
+      animation: gradientShift 10s ease infinite;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.25);
+      max-width: 500px;
+      margin: 20px;
+      flex-grow: 1;
       display: flex;
+      flex-direction: column;
       justify-content: center;
-      align-items: flex-start;
-      gap: 24px;
-      width: 90%;
-      max-width: 1300px;
-      margin: 20px auto 60px;
-      flex-wrap: nowrap;
     }
 
     @keyframes gradientShift {
@@ -129,107 +123,22 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* INFOBOX --------------------------------------------- */
-    .ride-info {
-      flex: 1;
-      border-radius: 16px;
-      padding: 24px 32px 40px 32px;
-      color: #fff;
-      font-weight: 500;
-      line-height: 1.6;
-      text-align: left;
-      box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
-      background: linear-gradient(135deg, #3fffab, #5b5bff, #a93fff, #3fffab);
-      background-size: 300% 300%;
-      animation: gradientShift 8s ease infinite;
-    }
-
-    .ride-info h3 {
-      font-size: 1.8rem;
-      font-weight: 700;
-      margin: 0 0 12px;
+    .countdown-box h3 {
+      font-size: 2.4rem;
+      margin-bottom: 14px;
       text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
-    .ride-info p {
-      font-size: 1rem;
-      margin: 20px 0;
+    .countdown-box .date {
+      font-size: 1.3rem;
+      opacity: 0.9;
+      margin-top: 10px;
     }
 
-    .ride-info a {
-      color: #caaad1;
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    .ride-info a:hover {
-      opacity: 0.8;
-    }
-
-    .route-hint {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 18px;
-      font-weight: 600;
-      color: #fff;
-      font-size: 1.1rem;
-      transition: transform 0.3s ease;
-    }
-
-    .route-hint span.arrow {
-      font-size: 1.4rem;
-      display: inline-block;
-      transition: transform 0.3s ease;
-    }
-
-    /* IFRAME BOX -------------------------------------- */
-    .iframe-overlay {
-      flex: 1;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-      display: flex;
-    }
-
-    .iframe-overlay iframe {
-      width: 100%;
-      height: 100%;
-      min-height: 520px;
-      border: none;
-      display: block;
-      border-radius: 16px;
-    }
-
-    /* MOBILE -------------------------------------- */
-    @media (max-width: 899px) {
-      .ride-section {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .ride-info,
-      .iframe-overlay {
-        width: 100%;
-        max-width: 90%;
-      }
-
-      .ride-info {
-        padding: 24px 28px 40px 28px;
-        margin-bottom: 40px;
-      }
-
-      .iframe-overlay iframe {
-  width: 100%;
-  height: 500px;
-  border: none;
-  border-radius: 16px;
-}
-
-
-      .route-hint span.arrow {
-        transform: rotate(90deg);
-      }
+    /* AUSGEBLENDETE SEKTION */
+    .ride-section {
+      display: none;
     }
 
     /* FOOTER ---------------------------------------------- */
@@ -273,24 +182,23 @@
       </div>
     </header>
 
-    <!-- CONTENT -->
+    <!-- COUNTDOWN BOX -->
+    <div class="countdown-box">
+      <h3 id="countdown">Nächster Ride in – Tagen</h3>
+      <div class="date">📅 31.03.2026
+<p>⌚ <strong>18:30 Uhr</strong></p>
+<p>📍 <strong>Gallusplatz, St. Gallen</strong></p></div>
+    </div>
+
+    <!-- AUSGEBLENDETE SEASON SECTION -->
     <section class="ride-section">
       <div class="ride-info">
-        <h3>Nächster und letzer Ride für diese Saison:</h3>
+        <h3>Nächster und letzter Ride für diese Saison:</h3>
         <p>📅 <strong>21.10.2025 – 18:30 Uhr</strong></p>
         <p>📍 <strong>Gallusplatz, St. Gallen</strong></p>
-        <p>🏁 <strong>Geschwindigkeiten:</strong><br>
-          🚴 Gemeinsame gemütliche Runde um die Stadt <br>
-          
-          <p>🍻 <strong>ab 19:30 Uhr Apéro im Kafi Otmar</strong></p>
-        </p>
-
-  
-
-        <div class="route-hint">Route <span class="arrow">→</span></div>
+        <p>🏁 Gemeinsame gemütliche Runde um die Stadt</p>
+        <p>🍻 Ab 19:30 Uhr Apéro im Kafi Otmar</p>
       </div>
-
-
 
       <div class="iframe-overlay">
         <iframe src="https://www.komoot.com/de-de/tour/2644716432/embed?share_token=aiqEcBWir7XmN8asLsaCI1R7E4cHnBT0bYPVVsvJ1nb7mI6zKW&profile=1" scrolling="no"></iframe>
@@ -314,9 +222,26 @@
     </a>
   </footer>
 
+  <script>
+    // Countdown bis 31.03.2026
+    const targetDate = new Date("2026-03-31T00:00:00").getTime();
+    const countdownEl = document.getElementById("countdown");
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const diff = targetDate - now;
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+      if (days >= 0) {
+        countdownEl.textContent = "Nächster Ride in " + days + " Tagen";
+      } else {
+        countdownEl.textContent = "Ride läuft 🚴‍♂️";
+      }
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000 * 60 * 60);
+  </script>
+
 </body>
 </html>
-
-
-
-
