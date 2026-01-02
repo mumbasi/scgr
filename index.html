@@ -98,6 +98,28 @@
       }
     }
 
+/* EVENT TEASER --------------------------------------------- */
+.event-teaser {
+  max-width: 500px;
+  width: 100%;
+  margin: 30px 20px 60px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.event-teaser img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.event-teaser:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+}
+
     /* COUNTDOWN BOX --------------------------------------------- */
     .countdown-box {
       border-radius: 20px;
@@ -182,6 +204,16 @@
       </div>
     </header>
 
+<!-- EVENT TEASER -->
+<a
+  href="https://docs.google.com/forms/d/e/1FAIpQLSc2dmV0xTv6kiftG1aFY2FdMh9HHcuDS-Rs860zfwc95utjQg/viewform"
+  target="_blank"
+  rel="noopener"
+  class="event-teaser"
+>
+  <img src="assets/wintergames.jpg" alt="Winter Games – Event Anmeldung">
+</a>
+
     <!-- COUNTDOWN BOX -->
     <div class="countdown-box">
       <h3 id="countdown">Nächster Ride in – Tagen</h3>
@@ -189,6 +221,8 @@
 <p>⌚ <strong>18:30 Uhr</strong></p>
 <p>📍 <strong>Gallusplatz, St. Gallen</strong></p></div>
     </div>
+
+
 
     <!-- AUSGEBLENDETE SEASON SECTION -->
     <section class="ride-section">
