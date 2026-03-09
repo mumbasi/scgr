@@ -147,6 +147,46 @@
     fill: white;
   }
 
+  /* ─── INTRO BANNER ─── */
+  #intro {
+    background: var(--black);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding: 22px 40px;
+  }
+  .intro-inner {
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .intro-inner p {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--white);
+    letter-spacing: 0.5px;
+    margin: 0;
+  }
+  .intro-inner span {
+    font-weight: 400;
+    color: rgba(255,255,255,0.55);
+  }
+  .intro-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+  @media (max-width: 600px) {
+    #intro { padding: 16px 20px; }
+    .intro-inner { gap: 12px; }
+    .intro-inner p { font-size: 15px; }
+    .intro-dot { display: none; }
+  }
+
   /* ─── HERO / NEXT RIDE ─── */
   #ride {
     background: var(--black);
@@ -801,22 +841,13 @@
     .hamburger { display: flex; }
 
     .header-inner {
-      flex-direction: column;
       height: auto;
-      padding: 24px 0;
-      justify-content: center;
-      gap: 16px;
+      padding: 16px 0;
     }
-    .brand {
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: 12px;
-    }
-    .logo { height: 80px; }
-    .brand-text h1 { font-size: 22px; }
-    .brand-text p { display: block; }
-    .hamburger { position: absolute; right: 20px; top: 32px; }
+    .logo { height: 56px; }
+    .brand-text h1 { font-size: 18px; }
+    .brand-text p { display: none; }
+    .hamburger { position: absolute; right: 20px; top: 24px; }
 
     .program-layout { grid-template-columns: 1fr; }
     .komoot-grid.two-col { grid-template-columns: 1fr; }
@@ -828,7 +859,6 @@
     .section { padding: 64px 20px; }
     #ride { padding: 60px 20px; }
     .footer { padding: 48px 20px; }
-    .brand-text p { display: none; }
     .calendar-item { grid-template-columns: 100px 1fr; }
     .groups-grid { grid-template-columns: 1fr; gap: 12px; }
     .merch-grid { grid-template-columns: 1fr; }
@@ -844,7 +874,6 @@
       <img src="assets/scgr-logo.png" class="logo" alt="SCGR Logo">
       <div class="brand-text">
         <h1>SAINT CITY GROUP RIDE</h1>
-        <p>Rennvelo & Gravel Group Ride in St. Gallen<br>Jeden Dienstag während der Sommerzeit 18:30 Uhr – Gallusplatz</p>
       </div>
     </div>
     <nav class="nav" id="mainNav">
@@ -859,6 +888,16 @@
     </button>
   </div>
 </header>
+
+
+<!-- INTRO BANNER -->
+<div id="intro">
+  <div class="intro-inner">
+    <p>Rennvelo &amp; Gravel Group Ride in St. Gallen</p>
+    <div class="intro-dot"></div>
+    <p>Jeden Dienstag während der Sommerzeit <span>18:30 Uhr – Gallusplatz</span></p>
+  </div>
+</div>
 
 
 <!-- NEXT RIDE -->
@@ -1366,10 +1405,16 @@ document.querySelectorAll('.accordion-btn').forEach(btn => {
       b.classList.remove('active');
       b.nextElementSibling.style.display = 'none';
     });
-    // Toggle clicked
+    // Open clicked
     if (!isOpen) {
       btn.classList.add('active');
       btn.nextElementSibling.style.display = 'block';
+      // Scroll to button so it stays visible after content above collapses
+      setTimeout(() => {
+        const headerH = document.querySelector('.header').offsetHeight;
+        const top = btn.getBoundingClientRect().top + window.scrollY - headerH - 16;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }, 10);
     }
   });
 });
