@@ -448,13 +448,22 @@
 
   .calendar-table tbody tr:hover { background: var(--bg-section); }
 
-  /* Special event rows — light pink tint, Special tag */
+  /* Special event rows — light purple tint */
   .calendar-table tbody tr.is-special {
     background: rgba(202,170,209,0.12);
     border-bottom: 1px solid rgba(202,170,209,0.25);
   }
   .calendar-table tbody tr.is-special:hover {
     background: rgba(202,170,209,0.22);
+  }
+
+  /* Essensplausch rows — light orange tint */
+  .calendar-table tbody tr.is-essen {
+    background: rgba(224,123,57,0.08);
+    border-bottom: 1px solid rgba(224,123,57,0.2);
+  }
+  .calendar-table tbody tr.is-essen:hover {
+    background: rgba(224,123,57,0.15);
   }
 
   .cal-special-tag {
@@ -555,12 +564,24 @@
     position: relative;
     top: -1px;
   }
-  .cal-tag-womens { background: var(--womens); color: white; }
-  .cal-tag-gravel  { background: var(--gravel); color: white; }
+  .cal-tag-womens   { background: var(--womens); color: white; }
+  .cal-tag-gravel   { background: var(--gravel); color: white; }
+  .cal-tag-essen    { background: #e07b39; color: white; }
+  .cal-essen-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px; font-weight: 600; letter-spacing: 0.1em;
+    color: white; background: #e07b39;
+    padding: 8px 18px; border-radius: 2px;
+    text-decoration: none; margin-top: 12px;
+    transition: background 0.2s;
+  }
+  .cal-essen-link:hover { background: #c9682a; }
 
   /* Chevron — hidden on desktop for regular rows, always visible for specials */
   .cal-chevron { display: none; }
-  tr.is-special .cal-chevron {
+  tr.is-special .cal-chevron,
+  tr.is-essen .cal-chevron {
     display: inline-block;
     margin-left: 6px;
     font-size: 9px;
@@ -568,9 +589,10 @@
     transition: transform 0.2s;
     vertical-align: middle;
   }
-  tr.is-special.expanded .cal-chevron { transform: rotate(180deg); }
+  tr.is-special.expanded .cal-chevron,
+  tr.is-essen.expanded .cal-chevron { transform: rotate(180deg); }
   .calendar-table tbody tr.is-special { cursor: pointer; }
-
+  .show-mobile-only { display: none; }
 
   @media (max-width: 700px) {
     .cal-td-location,
@@ -578,6 +600,7 @@
     .calendar-table th.hide-mobile { display: none; }
     .cal-td-date { width: 90px; font-size: 13px; }
     .cal-td-name { font-size: 14px; }
+    .show-mobile-only { display: flex !important; margin-bottom: 8px; }
 
     .calendar-table tbody tr { cursor: pointer; }
 
@@ -936,7 +959,7 @@
 
     <div class="komoot-wrap active" id="komootRennvelo">
       <h4 id="rennveloLabel">Route — Rennvelo &amp; Women's Ride</h4>
-      <iframe src="https://www.komoot.com/de-de/tour/2644716432/embed?share_token=aPXsONGqeS8WNO7rl5kb5PwH15wAmhOD2iuJqyoPujCh6OBwMQ&profile=1" frameborder="0"></iframe>
+      <iframe src="https://www.komoot.com/de-de/tour/2821924132/embed?profile=1" frameborder="0"></iframe>
     </div>
     <div class="komoot-wrap" id="komootGravel">
       <h4>Route — Gravel</h4>
@@ -950,7 +973,10 @@
 <!-- GRUPPEN -->
 <section id="groups" class="section">
   <div class="section-inner">
-    <div class="section-title">GRUPPEN</div>
+    <div style="display:flex; align-items:baseline; justify-content:space-between; gap:16px; margin-bottom:32px; flex-wrap:wrap;">
+      <div class="section-title" style="margin-bottom:0;">GRUPPEN</div>
+      <div style="font-family:'Barlow Condensed',sans-serif; font-size:12px; letter-spacing:0.15em; color:var(--mid);">Design by <a href="https://likanuessli.ch/" target="_blank" style="color:var(--mid); text-decoration:underline; text-underline-offset:3px;">Lika Nüssli</a></div>
+    </div>
     <div class="groups-grid">
 
       <div class="group-card">
@@ -1104,7 +1130,7 @@
         </div>
         <div class="merch-body">
           <h3>Veloständer</h3>
-          <p>Der SCGR Veloständer — praktisch für zuhause oder die Garage. Für eine Bestellung einfach während dem Ride beim CdR oder danach im Kafi Otmar melden.</p>
+          <p>Der SCGR Veloständer — praktisch für zuhause oder die Garage. Für eine Bestellung einfach während dem Ride beim Guide oder danach im Kafi Otmar melden.</p>
           <div class="merch-price">CHF 60.—</div>
         </div>
       </div>
@@ -1168,15 +1194,15 @@
 // Season starts 31.03.2025, first week = Women's Ride, then alternates
 // Week 1 (odd): Women's Ride | Week 2 (even): Gravel Ride
 
-const SEASON_START = new Date('2026-03-31'); // First Tuesday of season
-const SEASON_END   = new Date('2026-10-27'); // Last Tuesday (adjust as needed)
+const SEASON_START = new Date(2026, 2, 31); // 31. März 2026
+const SEASON_END   = new Date(2026, 9, 27); // 27. Oktober 2026
 
 // KOMOOT URLs — ersetze den Gravel-Link sobald du ihn hast
-const KOMOOT_RENNVELO = 'https://www.komoot.com/de-de/tour/2644716432/embed?share_token=aPXsONGqeS8WNO7rl5kb5PwH15wAmhOD2iuJqyoPujCh6OBwMQ&profile=1';
-const KOMOOT_GRAVEL   = 'https://www.komoot.com/de-de/tour/2644716432/embed?share_token=aPXsONGqeS8WNO7rl5kb5PwH15wAmhOD2iuJqyoPujCh6OBwMQ&profile=1'; // ← GRAVEL LINK HIER ERSETZEN
+const KOMOOT_RENNVELO = 'https://www.komoot.com/de-de/tour/2821924132/embed?profile=1';
+const KOMOOT_GRAVEL   = 'https://www.komoot.com/de-de/tour/2821924132/embed?profile=1'; // ← GRAVEL LINK HIER ERSETZEN
 
 // ─── ROUTE STATS — wöchentlich anpassen ───────────────────────────────────
-const STATS_RENNVELO = { km: '45.5', hm: '678' };
+const STATS_RENNVELO = { km: '35.1', hm: '470' };
 const STATS_GRAVEL   = { km: '—',    hm: '—'   }; // ← GRAVEL STATS HIER ERSETZEN
 
 function getRideWeekIndex(tuesday) {
@@ -1228,9 +1254,9 @@ function formatDateShort(d) {
 
 // Special events (not on Tuesdays, shown separately in sidebar)
 const SPECIAL_EVENTS = [
-  { date: new Date('2026-05-01'), label: 'FULLMOON RIDE' },
-  { date: new Date('2026-08-08'), label: 'SUNRISE RIDE' },
-  { date: new Date('2026-09-13'), label: 'KLAUSEN MONUMENT' },
+  { date: new Date(2026, 4, 1), label: 'FULLMOON RIDE' },
+  { date: new Date(2026, 7, 8), label: 'SUNRISE RIDE' },
+  { date: new Date(2026, 8, 13), label: 'KLAUSEN MONUMENT' },
 ];
 
 function isSpecialEvent(d) {
@@ -1306,18 +1332,35 @@ function buildCalendar() {
 
   const specials = [
     {
-      date: new Date('2026-05-01'), name: 'Fullmoon Ride', location: 'Kafi Otmar', time: '20:00',
-      desc: 'Einmal im Jahr tauschen wir die Abenddämmerung gegen das Mondlicht. Bei Vollmond rollen wir durch die Nacht — wer braucht schon Strassenlaternen, wenn der Mond die Route beleuchtet? Treffpunkt ist ausnahmsweise beim Kafi Otmar. Nur bei guter Witterung. Weitere Infos folgen via Instagram, WhatsApp &amp; Strava.'
+      date: new Date(2026, 3, 12), name: 'Paris Roubaix Gravel Ride', location: 'Kafi Otmar', time: '12:00',
+      desc: 'Einmal Kopfsteinpflaster, immer Kopfsteinpflaster. Wir starten mit einem Gravel Ride — und danach schauen wir gemeinsam im Kafi Otmar das Rennen Paris–Roubaix. Wechselkleider können im Kafi Otmar deponiert werden. Vielleicht gibt\'s sogar Waffeln. Weitere Infos folgen hier, via Instagram, WhatsApp &amp; Strava.'
     },
     {
-      date: new Date('2026-08-08'), name: 'Sunrise Ride', location: 'Gallusplatz', time: '05:00',
-      desc: 'Der Wecker klingelt früh, aber dafür gehören die Strassen uns. Wir fahren dem Sonnenaufgang entgegen — mit stillen Strassen, kühler Luft und einem unvergesslichen Himmel. Danach: gemeinsames Frühstück. Nur bei guter Witterung. Weitere Infos folgen via Instagram, WhatsApp &amp; Strava.'
+      date: new Date(2026, 4, 1), name: 'Fullmoon Ride', location: 'Kafi Otmar', time: '20:00',
+      desc: 'Einmal im Jahr tauschen wir die Abenddämmerung gegen das Mondlicht. Bei Vollmond rollen wir durch die Nacht — wer braucht schon Strassenlaternen, wenn der Mond die Route beleuchtet? Treffpunkt ist ausnahmsweise beim Kafi Otmar. Nur bei guter Witterung. Weitere Infos folgen hier, via Instagram, WhatsApp &amp; Strava.'
     },
     {
-      date: new Date('2026-09-13'), name: 'Klausen Monument', location: 'Gallusplatz', time: '06:30',
-      desc: 'Das Highlight der Saison. Wir fahren gemeinsam zum Klausenpass — ein Klassiker, der uns jedes Jahr aufs Neue in den Bann zieht. Nichts für die Beine, aber alles für die Seele. Weitere Infos folgen via Instagram, WhatsApp &amp; Strava.'
+      date: new Date(2026, 7, 8), name: 'Sunrise Ride', location: 'Gallusplatz', time: '05:00',
+      desc: 'Der Wecker klingelt früh, aber dafür gehören die Strassen uns. Wir fahren dem Sonnenaufgang entgegen — mit stillen Strassen, kühler Luft und einem unvergesslichen Himmel. Nur bei guter Witterung. Weitere Infos folgen hier, via Instagram, WhatsApp &amp; Strava.'
+    },
+    {
+      date: new Date(2026, 8, 13), name: 'Klausen Monument', location: 'Gallusplatz', time: '06:30',
+      desc: 'Das Highlight der Saison. Wir fahren gemeinsam zum Klausenpass — ein Klassiker, der uns jedes Jahr aufs Neue in den Bann zieht. Nichts für die Beine, aber alles für die Seele. Wer möchte, kann auch in Ziegelbrück um 09:00 Uhr dazustossen. Weitere Infos folgen hier, via Instagram, WhatsApp &amp; Strava. Mehr Infos zum Klausen Monument: <a href="https://www.klausen-monument.ch/" target="_blank" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">klausen-monument.ch</a>'
     },
   ];
+
+  // Essensplausch events — appear on regular Tuesday rows
+  const essensplausch = [
+    { date: new Date(2026, 3, 28), gericht: 'Pasta', formUrl: 'https://docs.google.com/forms/d/e/1FAIpQLSdlD7cwmNgJiNrBtApFWzJMLMsGJN77YiuiXmeLFCqa2fVgeQ/viewform?usp=sharing' },
+    { date: new Date(2026, 5, 9), gericht: 'Chili sin Carne', formUrl: 'https://docs.google.com/forms/d/e/1FAIpQLSfk3sFDE2iQyAiBX10QsMCCLYrZHC3VLljY8ofHBPKuHHXkyg/viewform?usp=sharing' },
+    { date: new Date(2026, 7, 11), gericht: 'Chässpätzle', formUrl: 'https://docs.google.com/forms/d/e/1FAIpQLScwTMU07fCDFq05UoA-Tql--q75M_Va64CmRgMGgg0VfW8lEg/viewform?usp=sharing' },
+    { date: new Date(2026, 8, 15), gericht: 'Risotto', formUrl: 'https://docs.google.com/forms/d/e/1FAIpQLScCduQ_g3QLKGKbSjuhSmUvxOEi_0ocoT0MQopk2xDcl-bExQ/viewform?usp=sharing' },
+    { date: new Date(2026, 9, 27), gericht: 'Saisonfinale & Apéro', formUrl: null },
+  ];
+
+  function getEssensplausch(d) {
+    return essensplausch.find(e => e.date.toDateString() === d.toDateString());
+  }
 
   const tuesdays = getAllTuesdays().filter(d => d >= today);
   const allEntries = [];
@@ -1334,10 +1377,12 @@ function buildCalendar() {
   allEntries.forEach(entry => {
     const location = entry.isSpecial ? entry.location : 'Gallusplatz';
     const time     = entry.isSpecial ? entry.time     : '18:30';
+    const essen    = entry.isSpecial ? null : getEssensplausch(entry.date);
 
     // ── Main row ──
     const tr = document.createElement('tr');
     if (entry.isSpecial) tr.className = 'is-special';
+    if (essen) tr.className = 'is-essen';
 
     let nameHTML = '';
     if (entry.isSpecial) {
@@ -1346,7 +1391,8 @@ function buildCalendar() {
       const type = getRideType(entry.date);
       const typeLabel = type === 'womens' ? "Women's Ride" : 'Gravel Ride';
       const tagClass  = type === 'womens' ? 'cal-tag-womens' : 'cal-tag-gravel';
-      nameHTML = `Rennvelo (4 Gruppen) &amp; <span class="cal-tag ${tagClass}">${typeLabel}</span>`;
+      const essenTag  = essen ? ` <span class="cal-tag cal-tag-essen">Essensplausch</span>` : '';
+      nameHTML = `Rennvelo (4 Gruppen) &amp; <span class="cal-tag ${tagClass}">${typeLabel}</span>${essenTag}`;
     }
 
     tr.innerHTML = `
@@ -1358,8 +1404,8 @@ function buildCalendar() {
     `;
 
     // ── Detail/expand row ──
-    // For specials: shows on both desktop (desc + meta) and mobile
-    // For regular: shows on mobile only (location + time)
+    // Location+Zeit auf Mobile im aufgeklappten Teil (auf Desktop bereits in Hauptzeile sichtbar)
+    const mobileOnlyMeta = `<div class="cal-expand-inner show-mobile-only"><span>📍 ${location}</span><span>🕐 ${time} Uhr</span></div>`;
     const detailTr = document.createElement('tr');
 
     if (entry.isSpecial) {
@@ -1367,11 +1413,22 @@ function buildCalendar() {
       detailTr.innerHTML = `
         <td colspan="5">
           <div class="cal-desc-inner">
+            ${mobileOnlyMeta}
             <p>${entry.desc}</p>
-            <div class="cal-desc-meta">
-              <span>📍 ${location}</span>
-              <span>🕐 ${time} Uhr</span>
-            </div>
+          </div>
+        </td>
+      `;
+    } else if (essen) {
+      detailTr.className = 'cal-desc-row';
+      const essenBody = essen.formUrl
+        ? `<p>Nach dem Ride gibt es frisch gekochtes <strong>${essen.gericht}</strong> im Kafi Otmar. Für eine bessere Planung bitten wir dich um eine Anmeldung.</p>
+           <a href="${essen.formUrl}" target="_blank" class="cal-essen-link">✦ Jetzt anmelden</a>`
+        : `<p>Der letzte Ride der Saison 2026. Danach stossen wir gemeinsam auf ein unvergessliches Jahr an — Apéro im Kafi Otmar, ohne Anmeldung.</p>`;
+      detailTr.innerHTML = `
+        <td colspan="5">
+          <div class="cal-desc-inner">
+            ${mobileOnlyMeta}
+            ${essenBody}
           </div>
         </td>
       `;
