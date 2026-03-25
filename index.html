@@ -9,7 +9,16 @@
 <meta name="description" content="Saint City Group Ride (SCGR) – Der wöchentliche Rennvelo & Gravel Group Ride in St. Gallen. Jeden Dienstag um 18:30 Uhr ab Gallusplatz. Offene Community, 4 Tempogruppen, Women's Ride & Gravel Ride.">
 <meta name="keywords" content="SCGR, Saint City Group Ride, Group Ride St. Gallen, Rennvelo St. Gallen, Gravel Ride St. Gallen, Cycling St. Gallen, Velo Group Ride, Radfahren St. Gallen, Cycling Community Ostschweiz">
 <meta name="author" content="Saint City Group Ride">
-<link rel="canonical" href="https://scgr.cc/index">
+<link rel="canonical" href="https://scgr.cc/">
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RV894945S4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-RV894945S4');
+</script>
 
 <!-- Open Graph (Social Sharing) -->
 <meta property="og:type" content="website">
@@ -503,6 +512,14 @@
 
   .tempo-tag.gravel-tag { background: var(--gravel); }
   .tempo-tag.womens-tag { background: var(--womens); }
+  .tempo-sub {
+    display: block;
+    font-size: 12px;
+    color: var(--mid);
+    margin-top: 5px;
+    font-style: italic;
+    letter-spacing: 0.02em;
+  }
 
   /* ─── PROGRAMM ─── */
   #program { background: var(--white); }
@@ -1072,7 +1089,7 @@
         <div class="group-card-body">
           <h3>Espresso</h3>
           <p>Für alle, die sich austesten wollen. Hier darf richtig Tempo gemacht werden — und wenn's mal zu viel wird, lässt du dich einfach in die nächste Gruppe zurückfallen.</p>
-          <span class="tempo-tag">ca. 27–30 km/h</span>
+          <span class="tempo-tag">ca. 27–30 km/h</span><span class="tempo-sub">je nach Streckenprofil</span>
         </div>
       </div>
 
@@ -1081,7 +1098,7 @@
         <div class="group-card-body">
           <h3>Cappuccino Doppio</h3>
           <p>Die sportlichere Cappuccino-Gruppe. Ein Schwatz liegt drin — bis der Berg kommt. Dann wird's kurz ruhig und alle finden wieder ihren Rhythmus.</p>
-          <span class="tempo-tag">ca. 25–27 km/h</span>
+          <span class="tempo-tag">ca. 25–27 km/h</span><span class="tempo-sub">je nach Streckenprofil</span>
         </div>
       </div>
 
@@ -1090,7 +1107,7 @@
         <div class="group-card-body">
           <h3>Cappuccino</h3>
           <p>Der Klassiker. Gutes Tempo, guter Kontakt und viel Spass. Hier steht nicht die Leistung im Vordergrund, sondern gemeinsam unterwegs zu sein.</p>
-          <span class="tempo-tag">ca. 23–25 km/h</span>
+          <span class="tempo-tag">ca. 23–25 km/h</span><span class="tempo-sub">je nach Streckenprofil</span>
         </div>
       </div>
 
@@ -1099,7 +1116,7 @@
         <div class="group-card-body">
           <h3>Macchiato</h3>
           <p>Für alle, die ohne Stress fahren möchten, den Fahrtwind aber trotzdem lieben. Eine kleine Abkürzung hilft, dass wir am Schluss gemeinsam im Kafi Otmar etwas trinken können.</p>
-          <span class="tempo-tag">ca. 21–23 km/h</span>
+          <span class="tempo-tag">ca. 21–23 km/h</span><span class="tempo-sub">je nach Streckenprofil</span>
         </div>
       </div>
 
@@ -1295,6 +1312,13 @@ const SEASON_START = new Date(2026, 2, 31); // 31. März 2026
 const SEASON_END   = new Date(2026, 9, 27); // 27. Oktober 2026
 
 // KOMOOT URLs — ersetze den Gravel-Link sobald du ihn hast
+// ─── WÖCHENTLICHES UPDATE ──────────────────────────────────────────────────
+// Jeden Dienstag vor dem Ride diese Werte aktualisieren:
+//   1. KOMOOT_RENNVELO  → neue Komoot Tour-URL (embed link)
+//   2. STATS_RENNVELO   → km und hm der neuen Route
+//   3. Gravel-Wochen (ungerade KW):
+//      KOMOOT_GRAVEL + STATS_GRAVEL ebenfalls updaten
+// ───────────────────────────────────────────────────────────────────────────
 const KOMOOT_RENNVELO = 'https://www.komoot.com/de-de/tour/2821924132/embed?profile=1';
 const KOMOOT_GRAVEL   = 'https://www.komoot.com/de-de/tour/2821924132/embed?profile=1'; // ← GRAVEL LINK HIER ERSETZEN
 
@@ -1468,6 +1492,10 @@ function buildCalendar() {
   const DAYS   = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
   const MONTHS = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
   function fmtDate(d) {
+    const isMobile = window.innerWidth <= 700;
+    if (isMobile) {
+      return String(d.getDate()).padStart(2,'0') + '.' + String(d.getMonth()+1).padStart(2,'0') + '.';
+    }
     return DAYS[d.getDay()] + ' · ' + String(d.getDate()).padStart(2,'0') + '. ' + MONTHS[d.getMonth()];
   }
 
