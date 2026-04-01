@@ -46,7 +46,7 @@
       "alternateName": "SCGR",
       "url": "https://scgr.cc",
       "logo": "https://scgr.cc/assets/scgr-logo.png",
-      "description": "Offene Rennvelo &  Cycling Community in St. Gallen. Wöchentliche Group Rides jeden Dienstag während der Sommerzeit.",
+      "description": "Offene Rennvelo & Gravel Cycling Community in St. Gallen. Wöchentliche Group Rides jeden Dienstag während der Sommerzeit.",
       "sport": "Cycling",
       "location": {
         "@type": "Place",
@@ -68,7 +68,7 @@
     {
       "@type": "Event",
       "name": "SCGR Weekly Group Ride",
-      "description": "Wöchentlicher Rennvelo &  Group Ride in St. Gallen. 4 Tempogruppen (Espresso, Cappuccino Doppio, Cappuccino, Macchiato), Women's Ride &  Ride.",
+      "description": "Wöchentlicher Rennvelo & Gravel Group Ride in St. Gallen. 4 Tempogruppen (Espresso, Cappuccino Doppio, Cappuccino, Macchiato), Women's Ride & Gravel Ride.",
       "startDate": "2026-03-31T18:30:00+01:00",
       "endDate": "2026-10-27T21:00:00+01:00",
       "eventSchedule": {
@@ -110,7 +110,7 @@
     --black: #0e0e0e;
     --white: #f5f4f0;
     --accent: #caaad1;
-    --: #7a9e4e;
+    --gravel: #7a9e4e;
     --womens: #4a7fb5;
     --special: #caaad1;
     --mid: #4a4a4a;
@@ -358,7 +358,7 @@
     margin-top: 6px;
   }
 
-  .ride-type-badge. { background: var(--); color: white; }
+  .ride-type-badge.gravel { background: var(--gravel); color: white; }
   .ride-type-badge.womens { background: var(--womens); color: white; }
 
   .komoot-tabs {
@@ -510,7 +510,7 @@
     border-radius: 2px;
   }
 
-  .tempo-tag.-tag { background: var(--); }
+  .tempo-tag.gravel-tag { background: var(--gravel); }
   .tempo-tag.womens-tag { background: var(--womens); }
   .tempo-sub {
     display: block;
@@ -670,7 +670,7 @@
     top: -1px;
   }
   .cal-tag-womens   { background: var(--womens); color: white; }
-  .cal-tag-   { background: var(--); color: white; }
+  .cal-tag-gravel   { background: var(--gravel); color: white; }
   .cal-tag-essen    { background: #e07b39; color: white; }
   .cal-essen-link {
     display: inline-flex; align-items: center; gap: 6px;
@@ -1021,7 +1021,7 @@
 <!-- INTRO BANNER -->
 <div id="intro">
   <div class="intro-inner">
-    <p>Rennvelo &amp;  Group Ride in St. Gallen</p>
+    <p>Rennvelo &amp; Gravel Group Ride in St. Gallen</p>
     <div class="intro-dot"></div>
     <p>Jeden Dienstag während der Sommerzeit</p>
     <div class="intro-dot"></div>
@@ -1056,20 +1056,20 @@
       </div>
     </div>
 
-    <!-- Tab buttons — only shown in  weeks -->
+    <!-- Tab buttons — only shown in Gravel weeks -->
     <div class="komoot-tabs" id="komootTabs">
       <button class="komoot-tab-btn active" id="tabBtnRennvelo" onclick="showKomootTab('rennvelo')">Rennvelo</button>
-      <button class="komoot-tab-btn" id="tabBtn" onclick="showKomootTab('')"></button>
+      <button class="komoot-tab-btn" id="tabBtnGravel" onclick="showKomootTab('gravel')">Gravel</button>
     </div>
 
     <div class="komoot-wrap active" id="komootRennvelo">
       <h4 id="rennveloLabel">Route — Rennvelo &amp; Women's Ride</h4>
       <iframe src="https://www.komoot.com/de-de/tour/2821924132/embed?profile=1" frameborder="0"></iframe>
     </div>
-    <div class="komoot-wrap" id="komoot">
-      <h4>Route — </h4>
-      <!--  Komoot-Link hier einfügen -->
-      <iframe id="IframeEl" src="" frameborder="0"></iframe>
+    <div class="komoot-wrap" id="komootGravel">
+      <h4>Route — Gravel</h4>
+      <!-- Gravel Komoot-Link hier einfügen -->
+      <iframe id="gravelIframeEl" src="" frameborder="0"></iframe>
     </div>
   </div>
 </section>
@@ -1121,11 +1121,11 @@
       </div>
 
       <div class="group-card">
-        <div class="group-card-img"><img src="assets/.png" alt=" Gruppe"></div>
+        <div class="group-card-img"><img src="assets/gravel.png" alt="Gravel Gruppe"></div>
         <div class="group-card-body">
-          <h3></h3>
+          <h3>Gravel</h3>
           <p>Die Gruppe, die gern aus der Reihe tanzt. Über Stock und Stein, Wald und Schotter — aber immer so, dass der Flow bleibt und der Fahrtwind spürbar ist.</p>
-          <span class="tempo-tag -tag">32mm Reifenbreite empfohlen</span>
+          <span class="tempo-tag gravel-tag">32mm Reifenbreite empfohlen</span>
         </div>
       </div>
 
@@ -1244,7 +1244,7 @@
         </div>
         <div class="merch-body">
           <h3>Veloständer</h3>
-          <p>Der SCGR Veloständer aus Holz — klappbar, leicht und für alle Reifenbreiten geeignet. Passend für Rennvelo,  und MTB. Für eine Bestellung einfach während dem Ride beim Guide oder danach im Kafi Otmar melden.</p>
+          <p>Der SCGR Veloständer aus Holz — klappbar, leicht und für alle Reifenbreiten geeignet. Passend für Rennvelo, Gravel und MTB. Für eine Bestellung einfach während dem Ride beim Guide oder danach im Kafi Otmar melden.</p>
           <div class="merch-price">CHF 60.—</div>
         </div>
       </div>
@@ -1270,7 +1270,7 @@
   <div class="footer-inner">
     <div class="footer-brand">
       <h2>Saint City Group Ride</h2>
-      <p>Rennvelo und  Group Ride<br>Jeden Dienstag in der Sommerzeit<br>18:30 · Gallusplatz, St. Gallen<br><br>Kein Verein, kein Rennen —<br>einfach zusammen ausfahren.</p>
+      <p>Rennvelo und Gravel Group Ride<br>Jeden Dienstag in der Sommerzeit<br>18:30 · Gallusplatz, St. Gallen<br><br>Kein Verein, kein Rennen —<br>einfach zusammen ausfahren.</p>
     </div>
     <div class="footer-col">
       <h4>Community</h4>
@@ -1306,12 +1306,12 @@
 <script>
 // ─── RIDE SCHEDULE LOGIC ───────────────────────────────────────────────────
 // Season starts 31.03.2025, first week = Women's Ride, then alternates
-// Week 1 (odd): Women's Ride | Week 2 (even):  Ride
+// Week 1 (odd): Women's Ride | Week 2 (even): Gravel Ride
 
 const SEASON_START = new Date(2026, 2, 31); // 31. März 2026
 const SEASON_END   = new Date(2026, 9, 27); // 27. Oktober 2026
 
-// KOMOOT URLs — ersetze den -Link sobald du ihn hast
+// KOMOOT URLs — ersetze den Gravel-Link sobald du ihn hast
 // ─── WÖCHENTLICHES UPDATE ──────────────────────────────────────────────────
 // Jeden Dienstag vor dem Ride diese Werte aktualisieren:
 //   1. KOMOOT_RENNVELO  → neue Komoot Tour-URL (embed link)
@@ -1320,11 +1320,11 @@ const SEASON_END   = new Date(2026, 9, 27); // 27. Oktober 2026
 //      KOMOOT_GRAVEL + STATS_GRAVEL ebenfalls updaten
 // ───────────────────────────────────────────────────────────────────────────
 const KOMOOT_RENNVELO = 'https://www.komoot.com/de-de/tour/2821924132/embed?profile=1';
-const KOMOOT_GRAVEL   = 'https://www.komoot.com/de-de/tour/2856026033/embed?profile=1'; // ← GRAVEL LINK HIER ERSETZEN
+const KOMOOT_GRAVEL   = 'https://www.komoot.com/de-de/tour/2821924132/embed?profile=1'; // ← GRAVEL LINK HIER ERSETZEN
 
 // ─── ROUTE STATS — wöchentlich anpassen ───────────────────────────────────
 const STATS_RENNVELO = { km: '35.1', hm: '470' };
-const STATS_GRAVEL   = { km: '21.6',    hm: '530'   }; // ← GRAVEL STATS HIER ERSETZEN
+const STATS_GRAVEL   = { km: '—',    hm: '—'   }; // ← GRAVEL STATS HIER ERSETZEN
 
 function getRideWeekIndex(tuesday) {
   const msPerWeek = 7 * 24 * 60 * 60 * 1000;
