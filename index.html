@@ -1320,11 +1320,11 @@ const SEASON_END   = new Date(2026, 9, 27); // 27. Oktober 2026
 //      KOMOOT_GRAVEL + STATS_GRAVEL ebenfalls updaten
 // ───────────────────────────────────────────────────────────────────────────
 const KOMOOT_RENNVELO = 'https://www.komoot.com/de-de/tour/2821924132/embed?profile=1';
-const KOMOOT_GRAVEL   = 'https://www.komoot.com/de-de/tour/2856026033/embed?profile=1'; // ← GRAVEL LINK HIER ERSETZEN
+const KOMOOT_GRAVEL   = 'https://www.komoot.com/de-de/tour/2821924132/embed?profile=1'; // ← GRAVEL LINK HIER ERSETZEN
 
 // ─── ROUTE STATS — wöchentlich anpassen ───────────────────────────────────
 const STATS_RENNVELO = { km: '35.1', hm: '470' };
-const STATS_GRAVEL   = { km: '21.6',    hm: '530'   }; // ← GRAVEL STATS HIER ERSETZEN
+const STATS_GRAVEL   = { km: '—',    hm: '—'   }; // ← GRAVEL STATS HIER ERSETZEN
 
 function getRideWeekIndex(tuesday) {
   const msPerWeek = 7 * 24 * 60 * 60 * 1000;
@@ -1335,6 +1335,42 @@ function getRideWeekIndex(tuesday) {
 function getRideType(tuesday) {
   const idx = getRideWeekIndex(tuesday);
   return (idx % 2 === 0) ? 'womens' : 'gravel';
+}
+
+// Special events die im "Next Ride" angezeigt werden sollen (mit cutoff: ab wann wieder regulär)
+const NEXT_RIDE_SPECIALS = [
+  {
+    date: new Date(2026, 3, 12), // So 12. April
+    cutoff: new Date(2026, 3, 12, 12, 0, 0), // Sonntag 12:00 → danach wieder regulär
+    name: 'Paris Roubaix Gravel Ride',
+    time: '11:00', location: 'Kafi Otmar',
+    badge: '<span class="ride-type-badge gravel">Special Ride</span>',
+    routeLabel: 'Route — Gravel',
+    komootSrc: 'https://www.komoot.com/de-de/tour/2871685212/embed?profile=1',
+    stats: { km: '44.6', hm: '790' },
+    showTabs: false,
+  },
+];
+
+function getNextEvent() {
+  const now = new Date();
+  const today = new Date(now); today.setHours(0,0,0,0);
+
+  // Prüfe ob ein Special Event aktuell aktiv ist (vor dem cutoff)
+  for (const s of NEXT_RIDE_SPECIALS) {
+    if (now < s.cutoff && s.date >= today) {
+      return { isSpecial: true, ...s };
+    }
+  }
+
+  // Sonst: nächster regulärer Dienstag
+  let d = new Date(today);
+  const dayOfWeek = d.getDay();
+  const daysUntilTuesday = (2 - dayOfWeek + 7) % 7 || 7;
+  d.setDate(d.getDate() + daysUntilTuesday);
+  if (d < SEASON_START) d = new Date(SEASON_START);
+  if (d > SEASON_END) return null;
+  return { isSpecial: false, date: d };
 }
 
 function getNextTuesdayInSeason() {
@@ -1411,37 +1447,81 @@ function showKomootTab(tab) {
 
 // ─── BUILD NEXT RIDE ───────────────────────────────────────────────────────
 function buildNextRide() {
-  const next = getNextTuesdayInSeason();
+  const next = getNextEvent();
   if (!next) {
     document.getElementById('rideHeadline').textContent = 'SAISON BEENDET';
     return;
   }
 
-  document.getElementById('rideHeadline').textContent = formatDateLong(next);
-
-  const type     = getRideType(next);
-  const typeName = document.getElementById('rideTypeName');
-  const typeBadge = document.getElementById('rideTypeBadge');
-  const tabs     = document.getElementById('komootTabs');
+  const tabs      = document.getElementById('komootTabs');
   const statsLabel = document.getElementById('routeStatsLabel');
   const statsValue = document.getElementById('routeStatsValue');
+  const typeName  = document.getElementById('rideTypeName');
+  const typeBadge = document.getElementById('rideTypeBadge');
 
-  if (type === 'womens') {
-    typeName.textContent = "Women's Ride";
-    typeBadge.innerHTML  = '<span class="ride-type-badge womens">Women\'s Ride</span>';
-    document.getElementById('rennveloLabel').textContent = 'Route — Rennvelo & Women\'s Ride';
-    tabs.classList.remove('visible');
+  if (next.isSpecial) {
+    // Special Event anzeigen
+    const dayNames = ['So','Mo','Di','Mi','Do','Fr','Sa'];
+    const months   = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+    const d = next.date;
+    document.getElementById('rideHeadline').textContent =
+      `${dayNames[d.getDay()].toUpperCase()} ${d.getDate()}. ${months[d.getMonth()].toUpperCase()} ${d.getFullYear()}`;
+
+    typeName.textContent = next.name;
+    typeBadge.innerHTML  = ''; // Badge nur in der Karte, nicht doppelt
+
+    // Info-Karten
+    document.querySelector('#rideTypeCard .value').innerHTML =
+      next.name + ' <span class="ride-type-badge" style="background:var(--special);color:var(--black);font-size:11px;padding:3px 8px;margin-left:4px;">Special</span> <span class="ride-type-badge gravel" style="font-size:11px;padding:3px 8px;">Gravel</span>';
+    document.querySelector('#routeStatsCard .label').textContent = next.routeLabel;
+    document.querySelector('#routeStatsCard .value').textContent =
+      next.stats.km + ' km · ' + next.stats.hm + ' hm';
+
+    // Treffpunkt-Karte auf Kafi Otmar setzen
+    const cards = document.querySelectorAll('.ride-info-card');
+    cards.forEach(card => {
+      if (card.querySelector('.label') && card.querySelector('.label').textContent === 'Treffpunkt') {
+        card.querySelector('.value').textContent = 'Kafi Otmar, St. Gallen';
+      }
+    });
+
+    // Uhrzeit-Karte updaten
+
+    // Uhrzeit-Karte updaten
+    document.querySelector('.ride-info-card .value').textContent = next.time + ' Uhr';
+
+    // Komoot
+    document.getElementById('rennveloLabel').textContent = next.routeLabel;
+    document.getElementById('komootRennvelo').querySelector('iframe').src = next.komootSrc;
     document.getElementById('komootRennvelo').classList.add('active');
     document.getElementById('komootGravel').classList.remove('active');
-    statsLabel.textContent = 'Route';
-    statsValue.textContent = STATS_RENNVELO.km + ' km · ' + STATS_RENNVELO.hm + ' hm';
+    tabs.classList.remove('visible');
+
+    statsLabel.textContent = next.routeLabel;
+    statsValue.textContent = next.stats.km + ' km · ' + next.stats.hm + ' hm';
+
   } else {
-    typeName.textContent = "Gravel Ride";
-    typeBadge.innerHTML  = '<span class="ride-type-badge gravel">Gravel Ride</span>';
-    document.getElementById('rennveloLabel').textContent = 'Route — Rennvelo';
-    document.getElementById('gravelIframeEl').src = KOMOOT_GRAVEL;
-    tabs.classList.add('visible');
-    showKomootTab('rennvelo');
+    // Regulärer Dienstag
+    document.getElementById('rideHeadline').textContent = formatDateLong(next.date);
+
+    const type = getRideType(next.date);
+    if (type === 'womens') {
+      typeName.textContent = "Women's Ride";
+      typeBadge.innerHTML  = '<span class="ride-type-badge womens">Women\'s Ride</span>';
+      document.getElementById('rennveloLabel').textContent = 'Route — Rennvelo & Women\'s Ride';
+      tabs.classList.remove('visible');
+      document.getElementById('komootRennvelo').classList.add('active');
+      document.getElementById('komootGravel').classList.remove('active');
+      statsLabel.textContent = 'Route';
+      statsValue.textContent = STATS_RENNVELO.km + ' km · ' + STATS_RENNVELO.hm + ' hm';
+    } else {
+      typeName.textContent = "Gravel Ride";
+      typeBadge.innerHTML  = '<span class="ride-type-badge gravel">Gravel Ride</span>';
+      document.getElementById('rennveloLabel').textContent = 'Route — Rennvelo';
+      document.getElementById('gravelIframeEl').src = KOMOOT_GRAVEL;
+      tabs.classList.add('visible');
+      showKomootTab('rennvelo');
+    }
   }
 }
 
@@ -1453,7 +1533,7 @@ function buildCalendar() {
 
   const specials = [
     {
-      date: new Date(2026, 3, 12), name: 'Paris Roubaix Gravel Ride', location: 'Kafi Otmar', time: '12:00',
+      date: new Date(2026, 3, 12), name: 'Paris Roubaix Gravel Ride', location: 'Kafi Otmar', time: '11:00',
       desc: 'Einmal Kopfsteinpflaster, immer Kopfsteinpflaster. Wir starten mit einem Gravel Ride — und danach schauen wir gemeinsam im Kafi Otmar das Rennen Paris–Roubaix. Wechselkleider können im Kafi Otmar deponiert werden. Vielleicht gibt\'s sogar Waffeln. Weitere Infos folgen hier, via Instagram, WhatsApp &amp; Strava.'
     },
     {
