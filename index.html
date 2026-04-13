@@ -1064,7 +1064,7 @@
 
     <div class="komoot-wrap active" id="komootRennvelo">
       <h4 id="rennveloLabel">Route — Rennvelo &amp; Women's Ride</h4>
-      <iframe src="https://www.komoot.com/de-de/tour/2821924132/embed?profile=1" frameborder="0"></iframe>
+      <iframe id="rennveloIframeEl" src="" frameborder="0"></iframe>
     </div>
     <div class="komoot-wrap" id="komootGravel">
       <h4>Route — Gravel</h4>
@@ -1510,6 +1510,7 @@ function buildNextRide() {
       typeBadge.innerHTML  = '<span class="ride-type-badge womens">Women\'s Ride</span>';
       document.getElementById('rennveloLabel').textContent = 'Route — Rennvelo & Women\'s Ride';
       tabs.classList.remove('visible');
+      document.getElementById('rennveloIframeEl').src = KOMOOT_RENNVELO;
       document.getElementById('komootRennvelo').classList.add('active');
       document.getElementById('komootGravel').classList.remove('active');
       statsLabel.textContent = 'Route';
@@ -1518,6 +1519,7 @@ function buildNextRide() {
       typeName.textContent = "Gravel Ride";
       typeBadge.innerHTML  = '<span class="ride-type-badge gravel">Gravel Ride</span>';
       document.getElementById('rennveloLabel').textContent = 'Route — Rennvelo';
+      document.getElementById('rennveloIframeEl').src = KOMOOT_RENNVELO;
       document.getElementById('gravelIframeEl').src = KOMOOT_GRAVEL;
       tabs.classList.add('visible');
       showKomootTab('rennvelo');
