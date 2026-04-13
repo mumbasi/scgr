@@ -1323,7 +1323,7 @@ const KOMOOT_RENNVELO = 'https://www.komoot.com/de-de/tour/2882000242/embed?prof
 const KOMOOT_GRAVEL   = 'https://www.komoot.com/de-de/tour/2821924132/embed?profile=1'; // ← GRAVEL LINK HIER ERSETZEN
 
 // ─── ROUTE STATS — wöchentlich anpassen ───────────────────────────────────
-const STATS_RENNVELO = { km: '35.1', hm: '470' };
+const STATS_RENNVELO = { km: '39.0', hm: '400' };
 const STATS_GRAVEL   = { km: '—',    hm: '—'   }; // ← GRAVEL STATS HIER ERSETZEN
 
 function getRideWeekIndex(tuesday) {
@@ -1341,7 +1341,7 @@ function getRideType(tuesday) {
 const NEXT_RIDE_SPECIALS = [
   {
     date: new Date(2026, 3, 12), // So 12. April
-    cutoff: new Date(2026, 3, 12, 12, 0, 0), // Sonntag 12:00 → danach wieder regulär
+    cutoff: new Date(2026, 3, 12, 14, 0, 0), // Sonntag 14:00 → danach wieder regulär
     name: 'Paris Roubaix Gravel Ride',
     time: '11:00', location: 'Kafi Otmar',
     badge: '<span class="ride-type-badge gravel">Special Ride</span>',
