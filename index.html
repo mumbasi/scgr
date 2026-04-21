@@ -1363,10 +1363,16 @@ function getNextEvent() {
     }
   }
 
+  // Wenn heute Dienstag ist und es noch vor 21:00 → heute anzeigen
+  if (now.getDay() === 2 && now.getHours() < 21) {
+    if (today >= SEASON_START && today <= SEASON_END) {
+      return { isSpecial: false, date: today };
+    }
+  }
+
   // Sonst: nächster regulärer Dienstag
   let d = new Date(today);
-  const dayOfWeek = d.getDay();
-  const daysUntilTuesday = (2 - dayOfWeek + 7) % 7 || 7;
+  const daysUntilTuesday = (2 - d.getDay() + 7) % 7 || 7;
   d.setDate(d.getDate() + daysUntilTuesday);
   if (d < SEASON_START) d = new Date(SEASON_START);
   if (d > SEASON_END) return null;
@@ -1374,12 +1380,17 @@ function getNextEvent() {
 }
 
 function getNextTuesdayInSeason() {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  const now = new Date();
+  const today = new Date(now); today.setHours(0,0,0,0);
+
+  // Wenn heute Dienstag ist und es noch vor 21:00 ist → heute anzeigen
+  if (now.getDay() === 2 && now.getHours() < 21) {
+    if (today >= SEASON_START && today <= SEASON_END) return today;
+  }
+
+  // Sonst: nächsten Dienstag suchen
   let d = new Date(today);
-  // Find next Tuesday (day 2)
-  const dayOfWeek = d.getDay();
-  const daysUntilTuesday = (2 - dayOfWeek + 7) % 7 || 7;
+  const daysUntilTuesday = (2 - d.getDay() + 7) % 7 || 7;
   d.setDate(d.getDate() + daysUntilTuesday);
   if (d < SEASON_START) d = new Date(SEASON_START);
   if (d > SEASON_END) return null;
