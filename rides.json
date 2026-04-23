@@ -1,0 +1,303 @@
+[
+  {
+    "date": "2026-04-28",
+    "type": "rennvelo",
+    "komoot": "https://www.komoot.com/de-de/tour/2895215446/embed?profile=1",
+    "km": "41.5",
+    "hm": "760"
+  },
+  {
+    "date": "2026-05-01",
+    "type": "special",
+    "komoot": "FULLMOON_KOMOOT_LINK_HIER",
+    "km": "60",
+    "hm": "1000"
+  },
+  {
+    "date": "2026-05-05",
+    "type": "rennvelo",
+    "komoot": "",
+    "km": "—",
+    "hm": "—"
+  },
+  {
+    "date": "2026-05-05",
+    "type": "gravel",
+    "komoot": "",
+    "km": "—",
+    "hm": "—"
+  },
+  {
+    "date": "2026-05-12",
+    "type": "rennvelo",
+    "komoot": "",
+    "km": "—",
+    "hm": "—"
+  },
+  {
+    "date": "2026-05-19",
+    "type": "rennvelo",
+    "komoot": "",
+    "km": "—",
+    "hm": "—"
+  },
+  {
+    "date": "2026-05-19",
+    "type": "gravel",
+    "komoot": "",
+    "km": "—",
+    "hm": "—"
+  },
+  {
+    "date": "2026-05-26",
+    "type": "rennvelo",
+    "komoot": "",
+    "km": "—",
+    "hm": "—"
+  },
+  {
+    "date": "2026-06-02",
+    "type": "rennvelo",
+    "komoot": "",
+    "km": "—",
+    "hm": "—"
+  },
+  {
+    "date": "2026-06-02",
+    "type": "gravel",
+    "komoot": "",
+    "km": "—",
+    "hm": "—"
+  },
+  {
+    "date": "2026-06-09",
+    "type": "rennvelo",
+    "komoot": "",
+    "km": "—",
+    "hm": "—"
+  },
+  {
+    "date": "2026-06-16",
+    "type": "rennvelo",
+    "komoot": "",
+    "km": "—",
+    "hm": "—"
+  },
+  {
+    "date": "2026-06-16",
+    "type": "gravel",
+    "komoot": "",
+    "km": "—",
+    "hm": "—"
+  },
+  {
+    "date": "2026-06-23",
+    "type": "rennvelo",
+    "komoot": "",
+    "km": "—",
+    "hm": "—"
+  },
+  {
+    "date": "2026-06-30",
+    "type": "rennvelo",
+    "komoot": "",
+    "km": "—",
+    "hm": "—"
+  },
+  {
+    "date": "2026-06-30",
+    "type": "gravel",
+    "komoot": "",
+    "km": "—",
+    "hm": "—"
+  },
+  {
+    "date": "2026-07-07",
+    "type": "rennvelo",
+    "komoot": "",
+    "km": "—",
+    "hm": "—"
+  },
+  {
+    "date": "2026-07-14",
+    "type": "rennvelo",
+    "komoot": "",
+    "km": "—",
+    "hm": "—"
+  },
+  {
+    "date": "2026-07-14",
+    "type": "gravel",
+    "komoot": "",
+    "km": "—",
+    "hm": "—"
+  },
+  {
+    "date": "2026-07-21",
+    "type": "rennvelo",
+    "komoot": "",
+    "km": "—",
+    "hm": "—"
+  },
+  {
+    "date": "2026-07-28",
+    "type": "rennvelo",
+    "komoot": "",
+    "km": "—",
+    "hm": "—"
+  },
+  {
+    "date": "2026-07-28",
+    "type": "gravel",
+    "komoot": "",
+    "km": "—",
+    "hm": "—"
+  },
+  {
+    "date": "2026-08-04",
+    "type": "rennvelo",
+    "komoot": "",
+    "km": "—",
+    "hm": "—"
+  },
+  {
+    "date": "2026-08-08",
+    "type": "special",
+    "komoot": "",
+    "km": "—",
+    "hm": "—"
+  },
+  {
+    "date": "2026-08-11",
+    "type": "rennvelo",
+    "komoot": "",
+    "km": "—",
+    "hm": "—"
+  },
+  {
+    "date": "2026-08-11",
+    "type": "gravel",
+    "komoot": "",
+    "km": "—",
+    "hm": "—"
+  },
+  {
+    "date": "2026-08-18",
+    "type": "rennvelo",
+    "komoot": "",
+    "km": "—",
+    "hm": "—"
+  },
+  {
+    "date": "2026-08-25",
+    "type": "rennvelo",
+    "komoot": "",
+    "km": "—",
+    "hm": "—"
+  },
+  {
+    "date": "2026-08-25",
+    "type": "gravel",
+    "komoot": "",
+    "km": "—",
+    "hm": "—"
+  },
+  {
+    "date": "2026-09-01",
+    "type": "rennvelo",
+    "komoot": "",
+    "km": "—",
+    "hm": "—"
+  },
+  {
+    "date": "2026-09-08",
+    "type": "rennvelo",
+    "komoot": "",
+    "km": "—",
+    "hm": "—"
+  },
+  {
+    "date": "2026-09-08",
+    "type": "gravel",
+    "komoot": "",
+    "km": "—",
+    "hm": "—"
+  },
+  {
+    "date": "2026-09-13",
+    "type": "special",
+    "komoot": "",
+    "km": "—",
+    "hm": "—"
+  },
+  {
+    "date": "2026-09-15",
+    "type": "rennvelo",
+    "komoot": "",
+    "km": "—",
+    "hm": "—"
+  },
+  {
+    "date": "2026-09-22",
+    "type": "rennvelo",
+    "komoot": "",
+    "km": "—",
+    "hm": "—"
+  },
+  {
+    "date": "2026-09-22",
+    "type": "gravel",
+    "komoot": "",
+    "km": "—",
+    "hm": "—"
+  },
+  {
+    "date": "2026-09-29",
+    "type": "rennvelo",
+    "komoot": "",
+    "km": "—",
+    "hm": "—"
+  },
+  {
+    "date": "2026-10-06",
+    "type": "rennvelo",
+    "komoot": "",
+    "km": "—",
+    "hm": "—"
+  },
+  {
+    "date": "2026-10-06",
+    "type": "gravel",
+    "komoot": "",
+    "km": "—",
+    "hm": "—"
+  },
+  {
+    "date": "2026-10-13",
+    "type": "rennvelo",
+    "komoot": "",
+    "km": "—",
+    "hm": "—"
+  },
+  {
+    "date": "2026-10-20",
+    "type": "rennvelo",
+    "komoot": "",
+    "km": "—",
+    "hm": "—"
+  },
+  {
+    "date": "2026-10-20",
+    "type": "gravel",
+    "komoot": "",
+    "km": "—",
+    "hm": "—"
+  },
+  {
+    "date": "2026-10-27",
+    "type": "rennvelo",
+    "komoot": "",
+    "km": "—",
+    "hm": "—"
+  }
+]
