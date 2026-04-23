@@ -1311,20 +1311,71 @@
 const SEASON_START = new Date(2026, 2, 31); // 31. März 2026
 const SEASON_END   = new Date(2026, 9, 27); // 27. Oktober 2026
 
-// KOMOOT URLs — ersetze den Gravel-Link sobald du ihn hast
-// ─── WÖCHENTLICHES UPDATE ──────────────────────────────────────────────────
-// Jeden Dienstag vor dem Ride diese Werte aktualisieren:
-//   1. KOMOOT_RENNVELO  → neue Komoot Tour-URL (embed link)
-//   2. STATS_RENNVELO   → km und hm der neuen Route
-//   3. Gravel-Wochen (ungerade KW):
-//      KOMOOT_GRAVEL + STATS_GRAVEL ebenfalls updaten
+// ─── ROUTEN WERDEN AUS rides.json GELADEN ─────────────────────────────────
+// Trage neue Routen in die Datei rides.json im Repo ein — kein HTML-Edit nötig!
+// Format pro Eintrag:
+//   { "date": "2026-05-05", "type": "gravel|womens|special", "komoot": "embed-url", "km": "24.7", "hm": "570" }
 // ───────────────────────────────────────────────────────────────────────────
-const KOMOOT_RENNVELO = 'https://www.komoot.com/de-de/tour/2895215446/embed?profile=1';
-const KOMOOT_GRAVEL   = 'https://www.komoot.com/de-de/tour/2895258513/embed?profile=1'; // ← GRAVEL LINK HIER ERSETZEN
 
-// ─── ROUTE STATS — wöchentlich anpassen ───────────────────────────────────
-const STATS_RENNVELO = { km: '41.5', hm: '760' };
-const STATS_GRAVEL   = { km: '24.7',    hm: '570'   }; // ← GRAVEL STATS HIER ERSETZEN
+// Fallback-Werte falls rides.json noch keinen Eintrag für diese Woche hat
+let KOMOOT_RENNVELO = '';
+let KOMOOT_GRAVEL   = '';
+let STATS_RENNVELO  = { km: '—', hm: '—' };
+let STATS_GRAVEL    = { km: '—', hm: '—' };
+let RIDES_DATA      = []; // wird aus rides.json befüllt
+
+function loadRidesAndInit() {
+  fetch('rides.json')
+    .then(r => r.json())
+    .then(data => {
+      RIDES_DATA = data;
+
+      // Suche den nächsten Dienstag (oder heute wenn Dienstag vor 21:00)
+      const nextTuesday = getNextTuesdayInSeason();
+      const nextTuesdayStr = nextTuesday
+        ? nextTuesday.toISOString().slice(0, 10)
+        : null;
+
+      // Rennvelo-Route für nächsten Dienstag
+      const rennveloEntry = data.find(r =>
+        r.date === nextTuesdayStr && r.type === 'rennvelo'
+      );
+      if (rennveloEntry && rennveloEntry.komoot) {
+        KOMOOT_RENNVELO = rennveloEntry.komoot;
+        STATS_RENNVELO  = { km: rennveloEntry.km || '—', hm: rennveloEntry.hm || '—' };
+      }
+
+      // Gravel-Route für nächsten Dienstag (falls Gravel-Woche)
+      const gravelEntry = data.find(r =>
+        r.date === nextTuesdayStr && r.type === 'gravel'
+      );
+      if (gravelEntry && gravelEntry.komoot) {
+        KOMOOT_GRAVEL = gravelEntry.komoot;
+        STATS_GRAVEL  = { km: gravelEntry.km || '—', hm: gravelEntry.hm || '—' };
+      }
+
+      // Special Ride Komoot-Links in NEXT_RIDE_SPECIALS eintragen
+      NEXT_RIDE_SPECIALS.forEach(special => {
+        const specialDateStr = special.date.toISOString().slice(0, 10);
+        const specialEntry = data.find(r => r.date === specialDateStr && r.type === 'special');
+        if (specialEntry && specialEntry.komoot) {
+          special.komootSrc = specialEntry.komoot;
+          special.stats = {
+            km: specialEntry.km || '—',
+            hm: specialEntry.hm || '—'
+          };
+        }
+      });
+
+      buildNextRide();
+      buildCalendar();
+    })
+    .catch(() => {
+      // Falls rides.json nicht geladen werden kann, trotzdem rendern
+      buildNextRide();
+      buildCalendar();
+    });
+}
 
 function getRideWeekIndex(tuesday) {
   const msPerWeek = 7 * 24 * 60 * 60 * 1000;
@@ -1497,8 +1548,6 @@ function buildNextRide() {
     });
 
     // Uhrzeit-Karte updaten
-
-    // Uhrzeit-Karte updaten
     document.querySelector('.ride-info-card .value').textContent = next.time + ' Uhr';
 
     // Komoot
@@ -1551,7 +1600,7 @@ function buildCalendar() {
     },
     {
       date: new Date(2026, 4, 1), name: 'Fullmoon Ride', location: 'Kafi Otmar', time: '20:00',
-      desc: 'Einmal im Jahr tauschen wir die Abenddämmerung gegen das Mondlicht. Bei Vollmond rollen wir durch die Nacht — wer braucht schon Strassenlaternen, wenn der Mond die Route beleuchtet? Treffpunkt ist beim Kafi Otmar um 20:00 Uhr. ca. 60KM und 1'000 HM. Nur bei guter Witterung. Weitere Infos folgen hier, via Instagram, WhatsApp &amp; Strava.'
+      desc: 'Einmal im Jahr tauschen wir die Abenddämmerung gegen das Mondlicht. Bei Vollmond rollen wir durch die Nacht — wer braucht schon Strassenlaternen, wenn der Mond die Route beleuchtet? Treffpunkt ist beim Kafi Otmar um 20:00 Uhr. Ca. 60 km und 1\'000 hm. Nur bei guter Witterung. Weitere Infos folgen hier, via Instagram, WhatsApp &amp; Strava.'
     },
     {
       date: new Date(2026, 7, 8), name: 'Sunrise Ride', location: 'Gallusplatz', time: '05:00',
@@ -1712,8 +1761,7 @@ document.querySelectorAll('#mainNav a').forEach(link => {
 });
 
 // ─── INIT ──────────────────────────────────────────────────────────────────
-buildNextRide();
-buildCalendar();
+loadRidesAndInit();
 </script>
 </body>
 </html>
