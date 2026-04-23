@@ -1324,6 +1324,12 @@ let STATS_RENNVELO  = { km: '—', hm: '—' };
 let STATS_GRAVEL    = { km: '—', hm: '—' };
 let RIDES_DATA      = []; // wird aus rides.json befüllt
 
+function toLocalDateStr(d) {
+  // Gibt Datum als YYYY-MM-DD in lokaler Zeitzone zurück (nicht UTC)
+  const pad = n => String(n).padStart(2, '0');
+  return d.getFullYear() + '-' + pad(d.getMonth()+1) + '-' + pad(d.getDate());
+}
+
 function loadRidesAndInit() {
   fetch('rides.json')
     .then(r => r.json())
@@ -1333,7 +1339,7 @@ function loadRidesAndInit() {
       // Suche den nächsten Dienstag (oder heute wenn Dienstag vor 21:00)
       const nextTuesday = getNextTuesdayInSeason();
       const nextTuesdayStr = nextTuesday
-        ? nextTuesday.toISOString().slice(0, 10)
+        ? toLocalDateStr(nextTuesday)
         : null;
 
       // Rennvelo-Route für nächsten Dienstag
@@ -1356,7 +1362,7 @@ function loadRidesAndInit() {
 
       // Special Ride Komoot-Links in NEXT_RIDE_SPECIALS eintragen
       NEXT_RIDE_SPECIALS.forEach(special => {
-        const specialDateStr = special.date.toISOString().slice(0, 10);
+        const specialDateStr = toLocalDateStr(special.date);
         const specialEntry = data.find(r => r.date === specialDateStr && r.type === 'special');
         if (specialEntry && specialEntry.komoot) {
           special.komootSrc = specialEntry.komoot;
