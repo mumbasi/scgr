@@ -682,6 +682,20 @@
     transition: background 0.2s;
   }
   .cal-essen-link:hover { background: #c9682a; }
+  .essen-deadline {
+    font-size: 13px;
+    color: #e07b39;
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: 0.08em;
+    margin-top: 6px;
+    margin-bottom: 4px;
+  }
+  .essen-expired {
+    font-size: 14px;
+    color: var(--mid);
+    font-style: italic;
+    margin-top: 6px;
+  }
 
   /* Chevron — hidden on desktop for regular rows, always visible for specials */
   .cal-chevron { display: none; }
@@ -1693,10 +1707,29 @@ function buildCalendar() {
       `;
     } else if (essen) {
       detailTr.className = 'cal-desc-row';
-      const essenBody = essen.formUrl
-        ? `<p>Nach dem Ride gibt es frisch gekochtes <strong>${essen.gericht}</strong> im Kafi Otmar. Für eine bessere Planung bitten wir dich um eine Anmeldung.</p>
-           <a href="${essen.formUrl}" target="_blank" class="cal-essen-link">✦ Jetzt anmelden</a>`
-        : `<p>Der letzte Ride der Saison 2026. Danach stossen wir gemeinsam auf ein unvergessliches Jahr an — Apéro im Kafi Otmar, ohne Anmeldung.</p>`;
+
+      // Anmeldeschluss: Sonntag vor dem Ride (Dienstag - 2 Tage) um Mitternacht
+      const deadline = new Date(entry.date);
+      deadline.setDate(deadline.getDate() - 2);
+      deadline.setHours(23, 59, 59, 999);
+      const deadlineDay = deadline.getDate();
+      const deadlineMonth = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'][deadline.getMonth()];
+      const now = new Date();
+
+      let essenBody;
+      if (!essen.formUrl) {
+        essenBody = `<p>Der letzte Ride der Saison 2026. Danach stossen wir gemeinsam auf ein unvergessliches Jahr an — Apéro im Kafi Otmar, ohne Anmeldung.</p>`;
+      } else if (now <= deadline) {
+        essenBody = `
+          <p>Nach dem Ride gibt es frisch gekochtes <strong>${essen.gericht}</strong> im Kafi Otmar. Für eine bessere Planung bitten wir dich um eine Anmeldung.</p>
+          <p class="essen-deadline">Anmeldeschluss: Sonntag, ${deadlineDay}. ${deadlineMonth} um Mitternacht.</p>
+          <a href="${essen.formUrl}" target="_blank" class="cal-essen-link">✦ Jetzt anmelden</a>`;
+      } else {
+        essenBody = `
+          <p>Nach dem Ride gibt es frisch gekochtes <strong>${essen.gericht}</strong> im Kafi Otmar.</p>
+          <p class="essen-expired">Anmeldeschluss war am Sonntag. Ohne Anmeldung leider kein Essen — aber feine Getränke gibt's trotzdem im Kafi Otmar!</p>`;
+      }
+
       detailTr.innerHTML = `
         <td colspan="5">
           <div class="cal-desc-inner">
