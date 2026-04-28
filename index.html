@@ -1378,8 +1378,8 @@ function loadRidesAndInit() {
       NEXT_RIDE_SPECIALS.forEach(special => {
         const specialDateStr = toLocalDateStr(special.date);
         const specialEntry = data.find(r => r.date === specialDateStr && r.type === 'special');
-        if (specialEntry && specialEntry.komoot) {
-          special.komootSrc = specialEntry.komoot;
+        if (specialEntry) {
+          if (specialEntry.komoot) special.komootSrc = specialEntry.komoot;
           special.stats = {
             km: specialEntry.km || '—',
             hm: specialEntry.hm || '—'
@@ -1415,10 +1415,20 @@ const NEXT_RIDE_SPECIALS = [
     cutoff: new Date(2026, 3, 12, 14, 0, 0), // Sonntag 14:00 → danach wieder regulär
     name: 'Paris Roubaix Gravel Ride',
     time: '11:00', location: 'Kafi Otmar',
-    badge: '<span class="ride-type-badge gravel">Special Ride</span>',
+    badge: '<span class="ride-type-badge" style="background:var(--special);color:var(--black);">Special</span> <span class="ride-type-badge gravel">Gravel</span>',
     routeLabel: 'Route — Gravel',
     komootSrc: 'https://www.komoot.com/de-de/tour/2874221489/embed?profile=1',
     stats: { km: '44.6', hm: '790' },
+    showTabs: false,
+  },
+  {
+    date: new Date(2026, 4, 1), // Do 1. Mai
+    cutoff: new Date(2026, 4, 3, 23, 59, 59), // Sonntag 3. Mai Mitternacht → danach wieder regulär
+    name: 'Fullmoon Ride',
+    time: '20:00', location: 'Kafi Otmar',
+    badge: '<span class="ride-type-badge" style="background:var(--special);color:var(--black);">Special</span>',
+    komootSrc: '', // wird aus rides.json geladen
+    stats: { km: '60', hm: '1000' },
     showTabs: false,
   },
 ];
@@ -1554,7 +1564,7 @@ function buildNextRide() {
 
     // Info-Karten
     document.querySelector('#rideTypeCard .value').innerHTML =
-      next.name + ' <span class="ride-type-badge" style="background:var(--special);color:var(--black);font-size:11px;padding:3px 8px;margin-left:4px;">Special</span> <span class="ride-type-badge gravel" style="font-size:11px;padding:3px 8px;">Gravel</span>';
+      next.name + ' ' + next.badge;
     document.querySelector('#routeStatsCard .label').textContent = next.routeLabel;
     document.querySelector('#routeStatsCard .value').textContent =
       next.stats.km + ' km · ' + next.stats.hm + ' hm';
