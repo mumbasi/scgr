@@ -1423,12 +1423,35 @@ const NEXT_RIDE_SPECIALS = [
   },
   {
     date: new Date(2026, 4, 1), // Do 1. Mai
-    cutoff: new Date(2026, 4, 3, 23, 59, 59), // Sonntag 3. Mai Mitternacht → danach wieder regulär
+    cutoff: new Date(2026, 4, 3, 23, 59, 59), // Sonntag 3. Mai Mitternacht
     name: 'Fullmoon Ride',
     time: '20:00', location: 'Kafi Otmar',
     badge: '<span class="ride-type-badge" style="background:var(--special);color:var(--black);">Special</span>',
-    komootSrc: '', // wird aus rides.json geladen
-    stats: { km: '60', hm: '1000' },
+    routeLabel: 'Route — Fullmoon Ride',
+    komootSrc: '',
+    stats: { km: '—', hm: '—' },
+    showTabs: false,
+  },
+  {
+    date: new Date(2026, 7, 8), // Sa 8. August
+    cutoff: new Date(2026, 7, 9, 23, 59, 59), // Sonntag 9. August Mitternacht
+    name: 'Sunrise Ride',
+    time: '05:00', location: 'Gallusplatz',
+    badge: '<span class="ride-type-badge" style="background:var(--special);color:var(--black);">Special</span>',
+    routeLabel: 'Route — Sunrise Ride',
+    komootSrc: '',
+    stats: { km: '—', hm: '—' },
+    showTabs: false,
+  },
+  {
+    date: new Date(2026, 8, 13), // So 13. September
+    cutoff: new Date(2026, 8, 13, 23, 59, 59), // Sonntag 13. September Mitternacht
+    name: 'Klausen Monument',
+    time: '06:30', location: 'Gallusplatz',
+    badge: '<span class="ride-type-badge" style="background:var(--special);color:var(--black);">Special</span>',
+    routeLabel: 'Route — Klausen Monument',
+    komootSrc: '',
+    stats: { km: '—', hm: '—' },
     showTabs: false,
   },
 ];
