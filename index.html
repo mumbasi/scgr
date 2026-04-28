@@ -417,6 +417,25 @@
     height: 650px;
     border: none;
   }
+  .komoot-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+    background: rgba(255,255,255,0.04);
+    border: 1px dashed rgba(255,255,255,0.15);
+    border-radius: 4px;
+    gap: 12px;
+    color: rgba(255,255,255,0.35);
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: 0.15em;
+    font-size: 14px;
+  }
+  .komoot-placeholder svg {
+    width: 32px; height: 32px;
+    opacity: 0.25;
+  }
 
   /* ─── SECTIONS ─── */
   .section {
@@ -1344,6 +1363,28 @@ function toLocalDateStr(d) {
   return d.getFullYear() + '-' + pad(d.getMonth()+1) + '-' + pad(d.getDate());
 }
 
+const PLACEHOLDER_HTML = `
+  <div class="komoot-placeholder">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/>
+    </svg>
+    ROUTE FOLGT
+  </div>`;
+
+function setKomootOrPlaceholder(wrapId, src) {
+  const wrap = document.getElementById(wrapId);
+  if (!wrap) return;
+  const iframe = wrap.querySelector('iframe');
+  const existing = wrap.querySelector('.komoot-placeholder');
+  if (src) {
+    if (iframe) { iframe.src = src; iframe.style.display = 'block'; }
+    if (existing) existing.remove();
+  } else {
+    if (iframe) { iframe.src = ''; iframe.style.display = 'none'; }
+    if (!existing) wrap.insertAdjacentHTML('beforeend', PLACEHOLDER_HTML);
+  }
+}
+
 function loadRidesAndInit() {
   fetch('rides.json')
     .then(r => r.json())
@@ -1605,7 +1646,7 @@ function buildNextRide() {
 
     // Komoot
     document.getElementById('rennveloLabel').textContent = next.routeLabel;
-    document.getElementById('komootRennvelo').querySelector('iframe').src = next.komootSrc;
+    setKomootOrPlaceholder('komootRennvelo', next.komootSrc);
     document.getElementById('komootRennvelo').classList.add('active');
     document.getElementById('komootGravel').classList.remove('active');
     tabs.classList.remove('visible');
@@ -1623,7 +1664,7 @@ function buildNextRide() {
       typeBadge.innerHTML  = '<span class="ride-type-badge womens">Women\'s Ride</span>';
       document.getElementById('rennveloLabel').textContent = 'Route — Rennvelo & Women\'s Ride';
       tabs.classList.remove('visible');
-      document.getElementById('rennveloIframeEl').src = KOMOOT_RENNVELO;
+      setKomootOrPlaceholder('komootRennvelo', KOMOOT_RENNVELO);
       document.getElementById('komootRennvelo').classList.add('active');
       document.getElementById('komootGravel').classList.remove('active');
       statsLabel.textContent = 'Route';
@@ -1632,8 +1673,8 @@ function buildNextRide() {
       typeName.textContent = "Gravel Ride";
       typeBadge.innerHTML  = '<span class="ride-type-badge gravel">Gravel Ride</span>';
       document.getElementById('rennveloLabel').textContent = 'Route — Rennvelo';
-      document.getElementById('rennveloIframeEl').src = KOMOOT_RENNVELO;
-      document.getElementById('gravelIframeEl').src = KOMOOT_GRAVEL;
+      setKomootOrPlaceholder('komootRennvelo', KOMOOT_RENNVELO);
+      setKomootOrPlaceholder('komootGravel', KOMOOT_GRAVEL);
       tabs.classList.add('visible');
       showKomootTab('rennvelo');
     }
