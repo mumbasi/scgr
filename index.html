@@ -973,7 +973,51 @@
     font-size: 12px;
     color: rgba(255,255,255,0.3);
     letter-spacing: 0.5px;
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    flex-wrap: wrap;
+    position: relative;
   }
+  .datenschutz-toggle {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.3);
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.2s;
+    font-family: 'Barlow', sans-serif;
+  }
+  .datenschutz-toggle:hover { color: rgba(255,255,255,0.6); }
+  .datenschutz-content {
+    display: none;
+    width: 100%;
+    margin-top: 16px;
+    padding: 20px 24px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 4px;
+  }
+  .datenschutz-content.open { display: block; }
+  .datenschutz-content p {
+    font-size: 13px;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 10px;
+    letter-spacing: 0.2px;
+  }
+  .datenschutz-content p:last-child { margin-bottom: 0; }
+  .datenschutz-content a {
+    color: rgba(255,255,255,0.55);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.2s;
+  }
+  .datenschutz-content a:hover { color: var(--accent); }
 
   /* ─── RESPONSIVE ─── */
   @media (max-width: 900px) {
@@ -1323,7 +1367,14 @@
     </div>
   </div>
   <div class="footer-bottom">
-    © 2026 Saint City Group Ride · St. Gallen
+    <span>© 2026 Saint City Group Ride · St. Gallen</span>
+    <button class="datenschutz-toggle" onclick="this.nextElementSibling.classList.toggle('open')">Datenschutz</button>
+    <div class="datenschutz-content">
+      <p>Diese Website verwendet keine Tracking-Cookies und kein Analytics. Es werden keine persönlichen Daten durch den Besuch dieser Seite gesammelt oder gespeichert.</p>
+      <p>Für die Anmeldung zu Essensplausch-Events nutzen wir Google Forms. Dabei werden die eingegebenen Daten (Name, Antworten) von Google verarbeitet. Es gelten die <a href="https://policies.google.com/privacy" target="_blank">Datenschutzbestimmungen von Google</a>. Die Anmeldedaten werden ausschliesslich zur internen Planung der Events genutzt und nicht an Dritte weitergegeben.</p>
+      <p>Diese Website verlinkt auf externe Plattformen (Instagram, Strava, Komoot, WhatsApp). Für deren Inhalte und Datenschutzpraktiken sind die jeweiligen Betreiber verantwortlich.</p>
+      <p>Bei Fragen: <a href="https://www.instagram.com/saint.city.group.ride" target="_blank">@saint.city.group.ride</a></p>
+    </div>
   </div>
 </footer>
 
