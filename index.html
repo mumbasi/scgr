@@ -11,14 +11,6 @@
 <meta name="author" content="Saint City Group Ride">
 <link rel="canonical" href="https://scgr.cc/">
 
-<!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-RV894945S4"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-RV894945S4');
-</script>
 
 <!-- Open Graph (Social Sharing) -->
 <meta property="og:type" content="website">
@@ -1501,9 +1493,19 @@ function getNextEvent() {
   const now = new Date();
   const today = new Date(now); today.setHours(0,0,0,0);
 
-  // Prüfe ob ein Special Event aktuell aktiv ist (vor dem cutoff)
+  // Berechne nächsten regulären Dienstag
+  let nextTuesday = new Date(today);
+  if (now.getDay() === 2 && now.getHours() < 21) {
+    // Heute ist Dienstag vor 21:00 → heute ist der nächste reguläre Ride
+    nextTuesday = today;
+  } else {
+    const daysUntilTuesday = (2 - today.getDay() + 7) % 7 || 7;
+    nextTuesday.setDate(today.getDate() + daysUntilTuesday);
+  }
+
+  // Prüfe ob ein Special Event vor dem nächsten Dienstag liegt UND noch nicht abgelaufen ist
   for (const s of NEXT_RIDE_SPECIALS) {
-    if (now < s.cutoff && s.date >= today) {
+    if (now < s.cutoff && s.date >= today && s.date <= nextTuesday) {
       return { isSpecial: true, ...s };
     }
   }
