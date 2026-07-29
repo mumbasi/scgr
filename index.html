@@ -907,6 +907,29 @@
     color: var(--accent);
   }
 
+  .merch-img { position: relative; }
+
+  .sold-out-badge {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-8deg);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 1.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #f5f4f0;
+    background: #0e0e0e;
+    padding: 0.3em 1em;
+    border: 2px solid #caaad1;
+    white-space: nowrap;
+  }
+
+  .merch-card.sold-out .merch-img img {
+    filter: grayscale(60%) opacity(0.55);
+  }
+  
   /* ─── FOOTER ─── */
   .footer {
     background: var(--black);
@@ -1329,13 +1352,14 @@
         </div>
       </div>
 
-      <div class="merch-card">
+     <div class="merch-card sold-out">
   <div class="merch-img">
     <img src="assets/scgr-bottle.gif" alt="Groupride-Flaschen">
+    <span class="sold-out-badge">Sold out</span>
   </div>
   <div class="merch-body">
     <h3>Groupride-Flaschen</h3>
-    <p>Genug Platz für Wasser, Iso oder was auch immer dich durch den Ride bringt. Erhältlich nach dem Ride im Kafi Otmar.</p>
+    <p>Genug Platz für Wasser, Iso oder was auch immer dich durch den Ride bringt.</p>
     <div class="merch-price">CHF 12.— / 2 für CHF 20.—</div>
   </div>
 </div>
@@ -1965,11 +1989,17 @@ loadRidesAndInit();
 </a>
 
 <script>
-  const merchBar = document.getElementById('merchBar');
-  const obs = new IntersectionObserver(e => {
-    merchBar.style.display = e[0].isIntersecting ? 'none' : 'flex';
-  }, { threshold: 0.2 });
-  obs.observe(document.getElementById('merch'));
+  const MERCH_BAR_ENABLED = false; // auf true setzen, um den Banner wieder zu aktivieren
+
+  if (MERCH_BAR_ENABLED) {
+    const merchBar = document.getElementById('merchBar');
+    const obs = new IntersectionObserver(e => {
+      merchBar.style.display = e[0].isIntersecting ? 'none' : 'flex';
+    }, { threshold: 0.2 });
+    obs.observe(document.getElementById('merch'));
+  } else {
+    document.getElementById('merchBar').style.display = 'none';
+  }
 </script>
   
 </body>
