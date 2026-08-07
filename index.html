@@ -1723,13 +1723,13 @@ function buildNextRide() {
     document.querySelector('#routeStatsCard .value').textContent =
       next.stats.km + ' km · ' + next.stats.hm + ' hm';
 
-    // Treffpunkt-Karte auf Kafi Otmar setzen
-    const cards = document.querySelectorAll('.ride-info-card');
-    cards.forEach(card => {
-      if (card.querySelector('.label') && card.querySelector('.label').textContent === 'Treffpunkt') {
-        card.querySelector('.value').textContent = 'Kafi Otmar, St. Gallen';
-      }
-    });
+    // Treffpunkt-Karte auf den tatsächlichen Ort des Events setzen
+   const cards = document.querySelectorAll('.ride-info-card');
+cards.forEach(card => {
+  if (card.querySelector('.label') && card.querySelector('.label').textContent === 'Treffpunkt') {
+    card.querySelector('.value').textContent = next.location + ', St. Gallen';
+  }
+});
 
     // Uhrzeit-Karte updaten
     document.querySelector('.ride-info-card .value').textContent = next.time + ' Uhr';
