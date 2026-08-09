@@ -1575,6 +1575,17 @@ const NEXT_RIDE_SPECIALS = [
     stats: { km: '—', hm: '—' },
     showTabs: false,
   },
+  {
+    date: new Date(2026, 8, 25), // Fr 25. September
+    cutoff: new Date(2026, 8, 25, 23, 59, 59), // Freitag 25. September Mitternacht
+    name: 'Sunset & Fullmoon Ride',
+    time: '17:00', location: 'Kafi Otmar',
+    badge: '<span class="ride-type-badge" style="background:var(--special);color:var(--black);">Special</span>',
+    routeLabel: 'Route — Sunset & Fullmoon Ride',
+    komootSrc: '',
+    stats: { km: '50', hm: '—' },
+    showTabs: false,
+  },
 ];
 
 function getNextEvent() {
@@ -1660,6 +1671,7 @@ const SPECIAL_EVENTS = [
   { date: new Date(2026, 4, 1), label: 'FULLMOON RIDE' },
   { date: new Date(2026, 7, 8), label: 'SUNRISE RIDE' },
   { date: new Date(2026, 8, 13), label: 'KLAUSEN MONUMENT' },
+  { date: new Date(2026, 8, 25), label: 'SUNSET & FULLMOON RIDE' },
 ];
 
 function isSpecialEvent(d) {
@@ -1794,6 +1806,10 @@ function buildCalendar() {
       date: new Date(2026, 8, 13), name: 'Klausen Monument', location: 'Gallusplatz', time: '06:30',
       desc: 'Das Highlight der Saison. Wir fahren gemeinsam zum Klausenpass — ein Klassiker, der uns jedes Jahr aufs Neue in den Bann zieht. Nichts für die Beine, aber alles für die Seele. Wer möchte, kann auch in Ziegelbrück um 09:00 Uhr dazustossen. Weitere Infos folgen hier, via Instagram, WhatsApp &amp; Strava. Mehr Infos zum Klausen Monument: <a href="https://www.klausen-monument.ch/" target="_blank" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">klausen-monument.ch</a>'
     },
+    {
+      date: new Date(2026, 8, 25), name: 'Sunset & Fullmoon Ride', location: 'Kafi Otmar', time: '17:00',
+      desc: 'Zwei Rides an einem Abend: Um 17:00 Uhr starten wir beim Kafi Otmar zum Sunset Ride — ca. 50 km, während der Fahrt taucht die Sonne unter, bevor es zurück nach St. Gallen geht. Wechselkleider können im Kafi Otmar deponiert werden. Danach geht\'s gleich weiter zum Fullmoon Ride ins Mondlicht. Nur bei guter Witterung. Weitere Infos folgen hier, via Instagram, WhatsApp &amp; Strava.'
+    },
   ];
 
   // Essensplausch events — appear on regular Tuesday rows
@@ -1807,6 +1823,15 @@ function buildCalendar() {
 
   function getEssensplausch(d) {
     return essensplausch.find(e => e.date.toDateString() === d.toDateString());
+  }
+
+  // Zusätzliche Hinweise auf regulären Dienstags-Rides (kein eigener Termin, nur Zusatzinfo)
+  const specialNotes = [
+    { date: new Date(2026, 7, 25), tag: 'MTB Special', desc: 'Biken auf dem Waldeggtrail — Tipps &amp; Tricks von Mareike und Aron.' },
+  ];
+
+  function getSpecialNote(d) {
+    return specialNotes.find(n => n.date.toDateString() === d.toDateString());
   }
 
   const tuesdays = getAllTuesdays().filter(d => d >= today);
@@ -1829,11 +1854,13 @@ function buildCalendar() {
     const location = entry.isSpecial ? entry.location : 'Gallusplatz';
     const time     = entry.isSpecial ? entry.time     : '18:30';
     const essen    = entry.isSpecial ? null : getEssensplausch(entry.date);
+    const note     = entry.isSpecial ? null : getSpecialNote(entry.date);
 
     // ── Main row ──
     const tr = document.createElement('tr');
     if (entry.isSpecial) tr.className = 'is-special';
     if (essen) tr.className = 'is-essen';
+    if (note) tr.className = 'is-special';
 
     let nameHTML = '';
     if (entry.isSpecial) {
@@ -1843,7 +1870,8 @@ function buildCalendar() {
       const typeLabel = type === 'womens' ? "Women's Ride" : 'Gravel Ride';
       const tagClass  = type === 'womens' ? 'cal-tag-womens' : 'cal-tag-gravel';
       const essenTag  = essen ? ` <span class="cal-tag cal-tag-essen">Essensplausch</span>` : '';
-      nameHTML = `Rennvelo (4 Gruppen) &amp; <span class="cal-tag ${tagClass}">${typeLabel}</span>${essenTag}`;
+      const noteTag   = note  ? ` <span class="cal-special-tag">${note.tag}</span>` : '';
+      nameHTML = `Rennvelo (4 Gruppen) &amp; <span class="cal-tag ${tagClass}">${typeLabel}</span>${essenTag}${noteTag}`;
     }
 
     tr.innerHTML = `
@@ -1899,6 +1927,16 @@ function buildCalendar() {
           <div class="cal-desc-inner">
             ${mobileOnlyMeta}
             ${essenBody}
+          </div>
+        </td>
+      `;
+    } else if (note) {
+      detailTr.className = 'cal-desc-row';
+      detailTr.innerHTML = `
+        <td colspan="5">
+          <div class="cal-desc-inner">
+            ${mobileOnlyMeta}
+            <p>${note.desc}</p>
           </div>
         </td>
       `;
