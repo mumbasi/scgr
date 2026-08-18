@@ -1587,7 +1587,17 @@ const NEXT_RIDE_SPECIALS = [
     showTabs: false,
   },
 ];
+  
+// Zusätzliche Hinweise auf regulären Dienstags-Rides (kein eigener Termin, nur Zusatzinfo)
+// replacesGravel: true → die Gravel-Runde entfällt an diesem Tag, wird durch das Special ersetzt
+const specialNotes = [
+  { date: new Date(2026, 7, 25), tag: 'MTB Special', desc: 'Biken auf dem Waldeggtrail — Tipps &amp; Tricks von Mareike und Aron.', replacesGravel: true },
+];
 
+function getSpecialNote(d) {
+  return specialNotes.find(n => n.date.toDateString() === d.toDateString());
+}
+  
 function getNextEvent() {
   const now = new Date();
   const today = new Date(now); today.setHours(0,0,0,0);
@@ -1756,12 +1766,25 @@ cards.forEach(card => {
     statsLabel.textContent = next.routeLabel;
     statsValue.textContent = next.stats.km + ' km · ' + next.stats.hm + ' hm';
 
-  } else {
+    } else {
     // Regulärer Dienstag
     document.getElementById('rideHeadline').textContent = formatDateLong(next.date);
 
     const type = getRideType(next.date);
-    if (type === 'womens') {
+    const note = getSpecialNote(next.date);
+
+    if (note && note.replacesGravel) {
+      // Special ersetzt die Gravel-Runde an diesem Dienstag
+      typeName.textContent = note.tag;
+      typeBadge.innerHTML  = `<span class="ride-type-badge" style="background:var(--special);color:var(--black);">${note.tag}</span>`;
+      document.getElementById('rennveloLabel').textContent = 'Route — Rennvelo';
+      tabs.classList.remove('visible');
+      setKomootOrPlaceholder('komootRennvelo', KOMOOT_RENNVELO);
+      document.getElementById('komootRennvelo').classList.add('active');
+      document.getElementById('komootGravel').classList.remove('active');
+      statsLabel.textContent = 'Route';
+      statsValue.textContent = STATS_RENNVELO.km + ' km · ' + STATS_RENNVELO.hm + ' hm';
+    } else if (type === 'womens') {
       typeName.textContent = "Women's Ride";
       typeBadge.innerHTML  = '<span class="ride-type-badge womens">Women\'s Ride</span>';
       document.getElementById('rennveloLabel').textContent = 'Route — Rennvelo & Women\'s Ride';
@@ -1825,14 +1848,6 @@ function buildCalendar() {
     return essensplausch.find(e => e.date.toDateString() === d.toDateString());
   }
 
-  // Zusätzliche Hinweise auf regulären Dienstags-Rides (kein eigener Termin, nur Zusatzinfo)
-  const specialNotes = [
-    { date: new Date(2026, 7, 25), tag: 'MTB Special', desc: 'Biken auf dem Waldeggtrail — Tipps &amp; Tricks von Mareike und Aron.' },
-  ];
-
-  function getSpecialNote(d) {
-    return specialNotes.find(n => n.date.toDateString() === d.toDateString());
-  }
 
   const tuesdays = getAllTuesdays().filter(d => d >= today);
   const allEntries = [];
@@ -1865,13 +1880,22 @@ function buildCalendar() {
     let nameHTML = '';
     if (entry.isSpecial) {
       nameHTML = `${entry.name} <span class="cal-special-tag">Special</span>`;
-    } else {
+       } else {
       const type = getRideType(entry.date);
       const typeLabel = type === 'womens' ? "Women's Ride" : 'Gravel Ride';
       const tagClass  = type === 'womens' ? 'cal-tag-womens' : 'cal-tag-gravel';
       const essenTag  = essen ? ` <span class="cal-tag cal-tag-essen">Essensplausch</span>` : '';
-      const noteTag   = note  ? ` <span class="cal-special-tag">${note.tag}</span>` : '';
-      nameHTML = `Rennvelo (4 Gruppen) &amp; <span class="cal-tag ${tagClass}">${typeLabel}</span>${essenTag}${noteTag}`;
+
+      let rideTypeHTML = `<span class="cal-tag ${tagClass}">${typeLabel}</span>`;
+      let noteTag = '';
+      if (note) {
+        if (note.replacesGravel) {
+          rideTypeHTML = `<span class="cal-special-tag">${note.tag}</span>`;
+        } else {
+          noteTag = ` <span class="cal-special-tag">${note.tag}</span>`;
+        }
+      }
+      nameHTML = `Rennvelo (4 Gruppen) &amp; ${rideTypeHTML}${essenTag}${noteTag}`;
     }
 
     tr.innerHTML = `
