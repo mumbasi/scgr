@@ -251,6 +251,22 @@
     "km": "29.7",
     "hm": "500"
   },
+
+  {
+    "date": "2026-09-25",
+    "type": "special",
+    "komoot": "https://www.komoot.com/de-de/tour/3298080924/embed?profile=1",
+    "km": "51.1",
+    "hm": "930"
+  },
+  {
+    "date": "2026-09-25",
+    "type": "special-2",
+    "komoot": "https://www.komoot.com/de-de/tour/3298081808/embed?profile=1",
+    "km": "50.9",
+    "hm": "620"
+  },
+  
   {
     "date": "2026-09-29",
     "type": "rennvelo",
