@@ -1150,7 +1150,7 @@
       </div>
     </div>
 
-    <!-- Tab buttons — only shown in Gravel weeks -->
+    <!-- Tab buttons — shown in Gravel weeks and for Specials with two routes -->
     <div class="komoot-tabs" id="komootTabs">
       <button class="komoot-tab-btn active" id="tabBtnRennvelo" onclick="showKomootTab('rennvelo')">Rennvelo</button>
       <button class="komoot-tab-btn" id="tabBtnGravel" onclick="showKomootTab('gravel')">Gravel</button>
@@ -1161,7 +1161,7 @@
       <iframe id="rennveloIframeEl" src="" frameborder="0"></iframe>
     </div>
     <div class="komoot-wrap" id="komootGravel">
-      <h4>Route — Gravel</h4>
+      <h4 id="gravelLabel">Route — Gravel</h4>
       <!-- Gravel Komoot-Link hier einfügen -->
       <iframe id="gravelIframeEl" src="" frameborder="0"></iframe>
     </div>
@@ -1427,7 +1427,13 @@ const SEASON_END   = new Date(2026, 9, 27); // 27. Oktober 2026
 // ─── ROUTEN WERDEN AUS rides.json GELADEN ─────────────────────────────────
 // Trage neue Routen in die Datei rides.json im Repo ein — kein HTML-Edit nötig!
 // Format pro Eintrag:
-//   { "date": "2026-05-05", "type": "gravel|womens|special", "komoot": "embed-url", "km": "24.7", "hm": "570" }
+//   { "date": "2026-05-05", "type": "gravel|womens|special|special-2", "komoot": "embed-url", "km": "24.7", "hm": "570" }
+//
+// Typen:
+//   rennvelo   → Rennvelo-Route eines Dienstags
+//   gravel     → Gravel-Route eines Dienstags
+//   special    → Route eines Special Rides (bei Specials mit 2 Routen: die erste Route, z.B. Sunset Ride)
+//   special-2  → zweite Route eines Special Rides mit Umschalter (z.B. Fullmoon Ride)
 // ───────────────────────────────────────────────────────────────────────────
 
 // Fallback-Werte falls rides.json noch keinen Eintrag für diese Woche hat
@@ -1436,6 +1442,9 @@ let KOMOOT_GRAVEL   = '';
 let STATS_RENNVELO  = { km: '—', hm: '—' };
 let STATS_GRAVEL    = { km: '—', hm: '—' };
 let RIDES_DATA      = []; // wird aus rides.json befüllt
+
+// Beschriftung der beiden Tabs (bei Specials mit zwei Routen überschrieben)
+let TAB_LABELS = { rennvelo: 'Rennvelo', gravel: 'Gravel' };
 
 function toLocalDateStr(d) {
   // Gibt Datum als YYYY-MM-DD in lokaler Zeitzone zurück (nicht UTC)
@@ -1506,6 +1515,18 @@ function loadRidesAndInit() {
             hm: specialEntry.hm || '—'
           };
         }
+
+        // Zweite Route (Umschalter) für Specials mit zwei Routen
+        if (special.second) {
+          const secondEntry = data.find(r => r.date === specialDateStr && r.type === 'special-2');
+          if (secondEntry) {
+            if (secondEntry.komoot) special.second.komootSrc = secondEntry.komoot;
+            special.second.stats = {
+              km: secondEntry.km || '—',
+              hm: secondEntry.hm || '—'
+            };
+          }
+        }
       });
 
       buildNextRide();
@@ -1530,6 +1551,9 @@ function getRideType(tuesday) {
 }
 
 // Special events die im "Next Ride" angezeigt werden sollen (mit cutoff: ab wann wieder regulär)
+// Optional: `second` → zweite Route mit Umschalter (wie bei Rennvelo/Gravel-Wochen)
+//   tabLabel   = Beschriftung des ersten Tabs (Fallback: 'Route 1')
+//   second.tabLabel / second.routeLabel / second.komootSrc / second.stats = zweite Route
 const NEXT_RIDE_SPECIALS = [
   {
     date: new Date(2026, 3, 12), // So 12. April
@@ -1579,12 +1603,21 @@ const NEXT_RIDE_SPECIALS = [
     date: new Date(2026, 8, 25), // Fr 25. September
     cutoff: new Date(2026, 8, 25, 23, 59, 59), // Freitag 25. September Mitternacht
     name: 'Sunset & Fullmoon Ride',
-    time: '18:30', location: 'Kafi Otmar',
+    time: '18:30 / ca. 20:30', location: 'Kafi Otmar',
     badge: '<span class="ride-type-badge" style="background:var(--special);color:var(--black);">Special</span>',
-    routeLabel: 'Route — Sunset & Fullmoon Ride',
+    // Route 1: Sunset Ride (rides.json → type "special")
+    routeLabel: 'Route — Sunset Ride',
+    tabLabel: 'Sunset Ride',
     komootSrc: '',
     stats: { km: '50', hm: '—' },
     showTabs: false,
+    // Route 2: Fullmoon Ride (rides.json → type "special-2")
+    second: {
+      tabLabel: 'Fullmoon Ride',
+      routeLabel: 'Route — Fullmoon Ride',
+      komootSrc: '',
+      stats: { km: '—', hm: '—' },
+    },
   },
 ];
   
@@ -1701,14 +1734,14 @@ function showKomootTab(tab) {
     gravel.classList.remove('active');
     btnR.classList.add('active');
     btnG.classList.remove('active');
-    statsLabel.textContent = 'Rennvelo Route';
+    statsLabel.textContent = TAB_LABELS.rennvelo + ' Route';
     statsValue.textContent = STATS_RENNVELO.km + ' km · ' + STATS_RENNVELO.hm + ' hm';
   } else {
     gravel.classList.add('active');
     rennvelo.classList.remove('active');
     btnG.classList.add('active');
     btnR.classList.remove('active');
-    statsLabel.textContent = 'Gravel Route';
+    statsLabel.textContent = TAB_LABELS.gravel + ' Route';
     statsValue.textContent = STATS_GRAVEL.km + ' km · ' + STATS_GRAVEL.hm + ' hm';
   }
 }
@@ -1765,6 +1798,21 @@ cards.forEach(card => {
 
     statsLabel.textContent = next.routeLabel;
     statsValue.textContent = next.stats.km + ' km · ' + next.stats.hm + ' hm';
+
+    // Special mit zwei Routen → Umschalter wie bei Rennvelo/Gravel-Wochen
+    if (next.second) {
+      TAB_LABELS     = { rennvelo: next.tabLabel || 'Route 1', gravel: next.second.tabLabel || 'Route 2' };
+      STATS_RENNVELO = next.stats;
+      STATS_GRAVEL   = next.second.stats;
+
+      document.getElementById('tabBtnRennvelo').textContent = TAB_LABELS.rennvelo;
+      document.getElementById('tabBtnGravel').textContent   = TAB_LABELS.gravel;
+      document.getElementById('gravelLabel').textContent    = next.second.routeLabel;
+
+      setKomootOrPlaceholder('komootGravel', next.second.komootSrc);
+      tabs.classList.add('visible');
+      showKomootTab('rennvelo');
+    }
 
     } else {
     // Regulärer Dienstag
@@ -1830,8 +1878,8 @@ function buildCalendar() {
       desc: 'Das Highlight der Saison. Wir fahren gemeinsam zum Klausenpass — ein Klassiker, der uns jedes Jahr aufs Neue in den Bann zieht. Nichts für die Beine, aber alles für die Seele. Wer möchte, kann auch in Ziegelbrück um 09:00 Uhr dazustossen. Weitere Infos folgen hier, via Instagram, WhatsApp &amp; Strava. Mehr Infos zum Klausen Monument: <a href="https://www.klausen-monument.ch/" target="_blank" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">klausen-monument.ch</a>'
     },
     {
-      date: new Date(2026, 8, 25), name: 'Sunset & Fullmoon Ride', location: 'Kafi Otmar', time: '18:30',
-      desc: 'Zwei Rides an einem Abend: Um 18:30 Uhr starten wir beim Kafi Otmar zum Sunset Ride — ca. 50 km, während der Fahrt taucht die Sonne unter, bevor es zurück nach St. Gallen geht. Wechselkleider können im Kafi Otmar deponiert werden. Danach geht\'s gleich weiter zum Fullmoon Ride ins Mondlicht. Nur bei guter Witterung. Weitere Infos folgen hier, via Instagram, WhatsApp &amp; Strava.'
+      date: new Date(2026, 8, 25), name: 'Sunset & Fullmoon Ride', location: 'Kafi Otmar', time: '18:30 / ca. 20:30',
+      desc: 'Zwei Rides an einem Abend: Um 18:30 Uhr starten wir beim Kafi Otmar zum Sunset Ride — ca. 50 km, während der Fahrt taucht die Sonne unter, bevor es zurück nach St. Gallen geht. Wechselkleider können im Kafi Otmar deponiert werden. Danach geht\'s gleich weiter zum Fullmoon Ride ins Mondlicht — Start ca. 20:30 Uhr. Nur bei guter Witterung. Weitere Infos folgen hier, via Instagram, WhatsApp &amp; Strava.'
     },
   ];
 
