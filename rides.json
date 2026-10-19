@@ -298,22 +298,22 @@
   {
     "date": "2026-10-20",
     "type": "rennvelo",
-    "komoot": "",
-    "km": "—",
-    "hm": "—"
+    "komoot": "https://www.komoot.com/de-de/tour/3356171275/embed?profile=1",
+    "km": "29.2",
+    "hm": "520"
   },
   {
     "date": "2026-10-20",
     "type": "gravel",
-    "komoot": "",
-    "km": "—",
-    "hm": "—"
+    "komoot": "https://www.komoot.com/de-de/tour/3356167163/embed?profile=1",
+    "km": "27.2",
+    "hm": "400"
   },
   {
     "date": "2026-10-27",
     "type": "rennvelo",
-    "komoot": "",
-    "km": "—",
-    "hm": "—"
+    "komoot": "https://www.komoot.com/de-de/tour/3350246334/embed?profile=1",
+    "km": "26.5",
+    "hm": "340"
   }
 ]
