@@ -1798,6 +1798,7 @@ const NEXT_RIDE_SPECIALS = [
 // replacesGravel: true → die Gravel-Runde entfällt an diesem Tag, wird durch das Special ersetzt
 const specialNotes = [
   { date: new Date(2026, 7, 25), tag: 'MTB Special', desc: 'Biken auf dem Waldeggtrail — Tipps &amp; Tricks von Mareike und Aron.', replacesGravel: true },
+  { date: new Date(2026, 9, 27), tag: 'Special', desc: 'Gemütlicher Nightride um die Stadt, danach stossen wir gemeinsam auf ein unvergessliches Jahr an — Apéro im Kafi Otmar, ohne Anmeldung.', replacesGravel: true },
 ];
 
 function getSpecialNote(d) {
@@ -2234,7 +2235,8 @@ function buildCalendar() {
       const type = getRideType(entry.date);
       const typeLabel = type === 'womens' ? "Women's Ride" : 'Gravel Ride';
       const tagClass  = type === 'womens' ? 'cal-tag-womens' : 'cal-tag-gravel';
-      const essenTag  = essen ? ` <span class="cal-tag cal-tag-essen">Essensplausch</span>` : '';
+      // Ersetzt ein Special den Ride-Typ, entfällt auch der Essensplausch-Tag (nur ein Tag)
+      const essenTag  = (essen && !(note && note.replacesGravel)) ? ` <span class="cal-tag cal-tag-essen">Essensplausch</span>` : '';
 
       let rideTypeHTML = `<span class="cal-tag ${tagClass}">${typeLabel}</span>`;
       let noteTag = '';
