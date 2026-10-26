@@ -1085,6 +1085,112 @@
     .groups-grid { grid-template-columns: 1fr; gap: 12px; }
     .merch-grid { grid-template-columns: 1fr; }
   }
+
+  /* ─── WINTERPROGRAMM / EVENTS ─── */
+  .ride-type-badge.stammtisch { background: #2f8f9d; color: white; }
+  .ride-type-badge.wevent     { background: #3d4f66; color: white; }
+  .ride-type-badge.start      { background: var(--white); color: var(--black); }
+
+  .cal-tag-stammtisch { background: #2f8f9d; color: white; }
+  .cal-tag-wevent     { background: #3d4f66; color: white; }
+  .cal-tag-start      { background: var(--black); color: var(--white); }
+
+  .calendar-table tbody tr.is-winter {
+    background: rgba(47,143,157,0.09);
+    border-bottom: 1px solid rgba(47,143,157,0.22);
+    cursor: pointer;
+  }
+  .calendar-table tbody tr.is-winter:hover { background: rgba(47,143,157,0.17); }
+  tr.is-winter .cal-chevron {
+    display: inline-block;
+    margin-left: 6px;
+    font-size: 9px;
+    opacity: 0.45;
+    transition: transform 0.2s;
+    vertical-align: middle;
+  }
+  tr.is-winter.expanded .cal-chevron { transform: rotate(180deg); }
+  .cal-desc-winter td { border-bottom: 1px solid rgba(47,143,157,0.22); }
+  .cal-desc-winter .cal-desc-inner { background: rgba(47,143,157,0.06); }
+  @media (max-width: 700px) {
+    .cal-desc-winter .cal-desc-inner { background: transparent; }
+  }
+
+  /* Zwischentitel im Programm (z.B. "Winterprogramm 2026/27") */
+  .calendar-table tbody tr.cal-section-row {
+    background: transparent;
+    border-bottom: 2px solid var(--black);
+    cursor: default;
+  }
+  .calendar-table tbody tr.cal-section-row:hover { background: transparent; }
+  .calendar-table .cal-section-row td { padding: 0; }
+  .cal-section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--black);
+    padding: 36px 0 10px;
+  }
+
+  /* Beschreibung im "Next Event"-Bereich (Events ohne Route) */
+  .event-desc {
+    display: none;
+    max-width: 760px;
+    font-size: 17px;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.75);
+  }
+  .event-desc.visible { display: block; }
+
+  /* Events ohne Datum */
+  .undated { display: none; margin-top: 64px; }
+  .undated-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+    line-height: 1;
+    margin-bottom: 24px;
+  }
+  .undated-title span { color: var(--accent); }
+  .undated-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .undated-card {
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 20px 24px;
+    background: var(--bg-section);
+  }
+  .undated-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .undated-head .cal-tag { white-space: nowrap; flex-shrink: 0; }
+  .undated-when {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--mid);
+    text-align: right;
+  }
+  .undated-card h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .undated-card p { font-size: 16px; line-height: 1.7; color: var(--mid); }
 </style>
 </head>
 <body>
@@ -1099,9 +1205,9 @@
       </div>
     </div>
     <nav class="nav" id="mainNav">
-      <a href="#ride">NEXT RIDE</a>
+      <a href="#ride">NEXT EVENT</a>
       <a href="#groups">GRUPPEN</a>
-      <a href="#program">PROGRAMM 2026</a>
+      <a href="#program">PROGRAMM 2026/27</a>
       <a href="#charta">CHARTA</a>
       <a href="#merch">MERCH</a>
     </nav>
@@ -1127,17 +1233,17 @@
 <!-- NEXT RIDE -->
 <section id="ride">
   <div class="ride-inner">
-    <div class="section-label">NÄCHSTER RIDE</div>
+    <div class="section-label" id="sectionLabel">NÄCHSTER RIDE</div>
     <div class="ride-headline" id="rideHeadline">DI 31. MÄRZ 2026</div>
 
     <div class="ride-meta">
       <div class="ride-info-card">
         <div class="label">Uhrzeit</div>
-        <div class="value">18:30 Uhr</div>
+        <div class="value" id="rideTimeValue">18:30 Uhr</div>
       </div>
       <div class="ride-info-card">
         <div class="label">Treffpunkt</div>
-        <div class="value">Gallusplatz, St. Gallen</div>
+        <div class="value" id="rideLocationValue">Gallusplatz, St. Gallen</div>
       </div>
       <div class="ride-info-card" id="rideTypeCard">
         <div class="label">Diesen Dienstag</div>
@@ -1149,6 +1255,9 @@
         <div class="value" id="routeStatsValue">— km · — hm</div>
       </div>
     </div>
+
+    <!-- Beschreibung für Events ohne Route (Stammtisch, Winter-Events) -->
+    <div class="event-desc" id="eventDesc"></div>
 
     <!-- Tab buttons — shown in Gravel weeks and for Specials with two routes -->
     <div class="komoot-tabs" id="komootTabs">
@@ -1240,7 +1349,7 @@
 <!-- PROGRAMM -->
 <section id="program" class="section">
   <div class="section-inner">
-    <div class="section-title">PROGRAMM <span>2026</span></div>
+    <div class="section-title">PROGRAMM <span>2026/27</span></div>
     <table class="calendar-table">
       <thead>
         <tr>
@@ -1253,6 +1362,12 @@
       </thead>
       <tbody id="rideCalendar"></tbody>
     </table>
+
+    <!-- Events ohne Datum (aus events.json, "date": null) -->
+    <div class="undated" id="undatedEvents">
+      <div class="undated-title">WEITERE EVENTS <span>— Termine folgen</span></div>
+      <div class="undated-grid" id="undatedGrid"></div>
+    </div>
   </div>
 </section>
 
@@ -1397,9 +1512,9 @@
     </div>
     <div class="footer-col">
       <h4>Info</h4>
-      <a href="#ride">Next Ride</a>
+      <a href="#ride">Next Event</a>
       <a href="#groups">Gruppen</a>
-      <a href="#program">Programm 2026</a>
+      <a href="#program">Programm 2026/27</a>
       <a href="#charta">Charta</a>
     </div>
   </div>
@@ -1446,6 +1561,54 @@ let RIDES_DATA      = []; // wird aus rides.json befüllt
 // Beschriftung der beiden Tabs (bei Specials mit zwei Routen überschrieben)
 let TAB_LABELS = { rennvelo: 'Rennvelo', gravel: 'Gravel' };
 
+// ─── WINTERPROGRAMM / EVENTS (events.json) ─────────────────────────────────
+// Events ohne klassische Ausfahrt (Stammtisch, Winter-Events, Saisonstart).
+// Format pro Eintrag in events.json:
+//   { "date": "2026-12-01", "type": "stammtisch|event|saisonstart", "name": "...",
+//     "time": "18:30", "location": "Kafi Otmar", "desc": "...",
+//     "section": "optional: Zwischentitel im Programm",
+//     "komoot": "optional: embed-url → zeigt dann zusätzlich eine Route", "km": "..", "hm": ".." }
+//   Ohne Datum: { "date": null, "dateText": "Anfang Februar 2027", "type": "event", "name": "...", "desc": "..." }
+//   → erscheint im Block "Weitere Events" unter dem Programm. Sobald ein Termin fix ist:
+//     "date" setzen, "dateText" entfernen, optional "time" und "location" ergänzen.
+//   Leere "time" → "Zeit folgt", leere "location" → "Infos folgen".
+let EVENTS_DATA = [];
+const WINTER_SECTION = 'Winterprogramm 2026/27';
+const EVENT_TYPES = {
+  stammtisch:  { tag: 'Stammtisch',   cls: 'cal-tag-stammtisch', badge: 'stammtisch' },
+  event:       { tag: 'Winter-Event', cls: 'cal-tag-wevent',     badge: 'wevent' },
+  saisonstart: { tag: 'Saisonstart',  cls: 'cal-tag-start',      badge: 'start' },
+};
+function eventCfg(type) { return EVENT_TYPES[type] || EVENT_TYPES.event; }
+
+function parseLocalDate(str) {
+  // 'YYYY-MM-DD' → lokales Datum (kein UTC-Versatz)
+  const [y, m, d] = String(str).split('-').map(Number);
+  return new Date(y, m - 1, d);
+}
+
+function getDatedEvents() {
+  return EVENTS_DATA
+    .filter(e => e && e.date)
+    .map(e => ({ ...e, date: parseLocalDate(e.date) }))
+    .sort((a, b) => a.date - b.date);
+}
+
+function eventSection(e) {
+  if (e.section) return e.section;
+  return e.date > SEASON_END ? WINTER_SECTION : null;
+}
+
+function locationLabel(loc) {
+  if (!loc) return 'Infos folgen';
+  return (loc === 'Kafi Otmar' || loc === 'Gallusplatz') ? loc + ', St. Gallen' : loc;
+}
+
+function getNextWinterEvent() {
+  const today = new Date(); today.setHours(0,0,0,0);
+  return getDatedEvents().find(e => e.date >= today) || null;
+}
+
 function toLocalDateStr(d) {
   // Gibt Datum als YYYY-MM-DD in lokaler Zeitzone zurück (nicht UTC)
   const pad = n => String(n).padStart(2, '0');
@@ -1475,10 +1638,13 @@ function setKomootOrPlaceholder(wrapId, src) {
 }
 
 function loadRidesAndInit() {
-  fetch('rides.json')
-    .then(r => r.json())
-    .then(data => {
+  Promise.all([
+    fetch('rides.json').then(r => r.json()).catch(() => []),
+    fetch('events.json').then(r => r.json()).catch(() => [])
+  ])
+    .then(([data, events]) => {
       RIDES_DATA = data;
+      EVENTS_DATA = Array.isArray(events) ? events : [];
 
       // Suche den nächsten Dienstag (oder heute wenn Dienstag vor 21:00)
       const nextTuesday = getNextTuesdayInSeason();
@@ -1529,14 +1695,21 @@ function loadRidesAndInit() {
         }
       });
 
-      buildNextRide();
-      buildCalendar();
+      renderAll();
     })
     .catch(() => {
-      // Falls rides.json nicht geladen werden kann, trotzdem rendern
-      buildNextRide();
-      buildCalendar();
+      // Falls etwas schiefgeht, trotzdem rendern
+      renderAll();
     });
+}
+
+let RENDERED = false;
+function renderAll() {
+  if (RENDERED) return;
+  RENDERED = true;
+  buildNextRide();
+  buildCalendar();
+  buildUndated();
 }
 
 function getRideWeekIndex(tuesday) {
@@ -1632,6 +1805,14 @@ function getSpecialNote(d) {
 }
   
 function getNextEvent() {
+  // 1. Regulärer Dienstag bzw. Special der Saison, 2. danach Events aus events.json
+  const regular = getNextRegularEvent();
+  if (regular) return regular;
+  const winter = getNextWinterEvent();
+  return winter ? { isSpecial: false, isEvent: true, ...winter } : null;
+}
+
+function getNextRegularEvent() {
   const now = new Date();
   const today = new Date(now); today.setHours(0,0,0,0);
 
@@ -1751,8 +1932,11 @@ function buildNextRide() {
   const next = getNextEvent();
   if (!next) {
     document.getElementById('rideHeadline').textContent = 'SAISON BEENDET';
+    document.querySelector('#ride .ride-meta').style.display = 'none';
+    document.getElementById('komootRennvelo').classList.remove('active');
     return;
   }
+  if (next.isEvent) { renderEventCard(next); return; }
 
   const tabs      = document.getElementById('komootTabs');
   const statsLabel = document.getElementById('routeStatsLabel');
@@ -1854,6 +2038,106 @@ cards.forEach(card => {
   }
 }
 
+// ─── NEXT EVENT: Events ohne klassische Ausfahrt ───────────────────────────
+function renderEventCard(ev) {
+  const cfg = eventCfg(ev.type);
+  const dayNames = ['So','Mo','Di','Mi','Do','Fr','Sa'];
+  const d = ev.date;
+
+  document.getElementById('sectionLabel').textContent = 'NÄCHSTER EVENT';
+  document.getElementById('rideHeadline').textContent =
+    `${dayNames[d.getDay()].toUpperCase()} ${d.getDate()}. ${DE_MONTHS[d.getMonth()].toUpperCase()} ${d.getFullYear()}`;
+
+  document.getElementById('rideTimeValue').textContent = ev.time ? ev.time + ' Uhr' : 'Zeit folgt';
+  document.getElementById('rideLocationValue').textContent = locationLabel(ev.location);
+
+  const typeCard = document.getElementById('rideTypeCard');
+  typeCard.querySelector('.label').textContent = 'Anlass';
+  typeCard.querySelector('.value').innerHTML =
+    `${ev.name} <span class="ride-type-badge ${cfg.badge}">${cfg.tag}</span>`;
+  document.getElementById('rideTypeBadge').innerHTML = '';
+
+  const descEl = document.getElementById('eventDesc');
+  if (ev.desc) {
+    descEl.innerHTML = ev.desc;
+    descEl.classList.add('visible');
+  }
+
+  // Keine Route → Routen-Kachel und Karte ausblenden
+  const statsCard = document.getElementById('routeStatsCard');
+  const wrap = document.getElementById('komootRennvelo');
+  document.getElementById('komootTabs').classList.remove('visible');
+  document.getElementById('komootGravel').classList.remove('active');
+  if (ev.komoot) {
+    statsCard.style.display = '';
+    document.getElementById('routeStatsLabel').textContent = ev.routeLabel || 'Route';
+    document.getElementById('routeStatsValue').textContent =
+      (ev.km || '—') + ' km · ' + (ev.hm || '—') + ' hm';
+    document.getElementById('rennveloLabel').textContent = ev.routeLabel || 'Route';
+    setKomootOrPlaceholder('komootRennvelo', ev.komoot);
+    wrap.classList.add('active');
+  } else {
+    statsCard.style.display = 'none';
+    wrap.classList.remove('active');
+  }
+}
+
+// ─── PROGRAMM: Zeilen für Events aus events.json ───────────────────────────
+function appendEventRows(tbody, entry, fmtDate) {
+  const cfg     = eventCfg(entry.type);
+  const timeTxt = entry.time ? entry.time + ' Uhr' : 'Zeit folgt';
+  const locTxt  = entry.location || 'Infos folgen';
+
+  const tr = document.createElement('tr');
+  tr.className = 'is-winter';
+  tr.innerHTML = `
+    <td class="cal-td-date">${fmtDate(entry.date)}</td>
+    <td class="cal-td-name">${entry.name} <span class="cal-tag ${cfg.cls}">${cfg.tag}</span></td>
+    <td class="cal-td-location hide-mobile">${locTxt}</td>
+    <td class="cal-td-time hide-mobile">${timeTxt}</td>
+    <td class="cal-td-chevron"><span class="cal-chevron">▼</span></td>
+  `;
+
+  const detailTr = document.createElement('tr');
+  detailTr.className = 'cal-desc-row cal-desc-winter';
+  detailTr.innerHTML = `
+    <td colspan="5">
+      <div class="cal-desc-inner">
+        <div class="cal-expand-inner show-mobile-only"><span>📍 ${locTxt}</span><span>🕐 ${timeTxt}</span></div>
+        <p>${entry.desc || ''}</p>
+      </div>
+    </td>
+  `;
+
+  tr.addEventListener('click', () => {
+    const isOpen = detailTr.classList.contains('open');
+    detailTr.classList.toggle('open', !isOpen);
+    tr.classList.toggle('expanded', !isOpen);
+  });
+
+  tbody.appendChild(tr);
+  tbody.appendChild(detailTr);
+}
+
+// ─── PROGRAMM: Events ohne Datum ───────────────────────────────────────────
+function buildUndated() {
+  const list = EVENTS_DATA.filter(e => e && !e.date);
+  if (!list.length) return;
+  document.getElementById('undatedGrid').innerHTML = list.map(e => {
+    const cfg = eventCfg(e.type);
+    return `
+      <div class="undated-card">
+        <div class="undated-head">
+          <span class="cal-tag ${cfg.cls}">${cfg.tag}</span>
+          <span class="undated-when">${e.dateText || 'Termin folgt'}</span>
+        </div>
+        <h3>${e.name}</h3>
+        <p>${e.desc || ''}</p>
+      </div>`;
+  }).join('');
+  document.getElementById('undatedEvents').style.display = 'block';
+}
+
 // ─── BUILD CALENDAR ────────────────────────────────────────────────────────
 function buildCalendar() {
   const tbody = document.getElementById('rideCalendar');
@@ -1901,6 +2185,7 @@ function buildCalendar() {
   const allEntries = [];
   tuesdays.forEach(d => allEntries.push({ date: d, isSpecial: false }));
   specials.forEach(s => { if (s.date >= today) allEntries.push({ ...s, isSpecial: true }); });
+  getDatedEvents().forEach(ev => { if (ev.date >= today) allEntries.push({ ...ev, isSpecial: false, isEvent: true }); });
   allEntries.sort((a, b) => a.date - b.date);
 
   const DAYS   = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
@@ -1913,7 +2198,24 @@ function buildCalendar() {
     return DAYS[d.getDay()] + ' · ' + String(d.getDate()).padStart(2,'0') + '. ' + MONTHS[d.getMonth()];
   }
 
+  let lastSection = null;
   allEntries.forEach(entry => {
+    // Zwischentitel (z.B. "Winterprogramm 2026/27") beim Wechsel des Abschnitts
+    const sec = entry.isEvent ? eventSection(entry) : null;
+    if (sec && sec !== lastSection) {
+      const sepTr = document.createElement('tr');
+      sepTr.className = 'cal-section-row';
+      sepTr.innerHTML = `<td colspan="5"><div class="cal-section-label">${sec}</div></td>`;
+      tbody.appendChild(sepTr);
+    }
+    lastSection = sec;
+
+    // Events aus events.json (Stammtisch, Winter-Events, Saisonstart)
+    if (entry.isEvent) {
+      appendEventRows(tbody, entry, fmtDate);
+      return;
+    }
+
     const location = entry.isSpecial ? entry.location : 'Gallusplatz';
     const time     = entry.isSpecial ? entry.time     : '18:30';
     const essen    = entry.isSpecial ? null : getEssensplausch(entry.date);
