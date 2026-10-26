@@ -1798,7 +1798,7 @@ const NEXT_RIDE_SPECIALS = [
 // replacesGravel: true → die Gravel-Runde entfällt an diesem Tag, wird durch das Special ersetzt
 const specialNotes = [
   { date: new Date(2026, 7, 25), tag: 'MTB Special', desc: 'Biken auf dem Waldeggtrail — Tipps &amp; Tricks von Mareike und Aron.', replacesGravel: true },
-  { date: new Date(2026, 9, 27), tag: 'Special', desc: 'Gemütlicher Nightride um die Stadt, danach stossen wir gemeinsam auf ein unvergessliches Jahr an — Apéro im Kafi Otmar, ohne Anmeldung.', replacesGravel: true },
+  { date: new Date(2026, 9, 27), name: 'Saison Abschluss', tag: 'Special', desc: 'Gemütlicher Nightride um die Stadt, danach stossen wir gemeinsam auf ein unvergessliches Jahr an — Apéro im Kafi Otmar, ohne Anmeldung.', replacesGravel: true },
 ];
 
 function getSpecialNote(d) {
@@ -2010,6 +2010,11 @@ cards.forEach(card => {
       // Special ersetzt die Gravel-Runde an diesem Dienstag
       typeName.textContent = note.tag;
       typeBadge.innerHTML  = `<span class="ride-type-badge" style="background:var(--special);color:var(--black);">${note.tag}</span>`;
+      if (note.name) {
+        // Eigener Name: Kachel zeigt "Name + Badge" statt "Rennvelo + Special"
+        document.querySelector('#rideTypeCard .value').innerHTML = `${note.name} ${typeBadge.innerHTML}`;
+        typeBadge.innerHTML = '';
+      }
       document.getElementById('rennveloLabel').textContent = 'Route — Rennvelo';
       tabs.classList.remove('visible');
       setKomootOrPlaceholder('komootRennvelo', KOMOOT_RENNVELO);
@@ -2247,7 +2252,9 @@ function buildCalendar() {
           noteTag = ` <span class="cal-special-tag">${note.tag}</span>`;
         }
       }
-      nameHTML = `Rennvelo (4 Gruppen) &amp; ${rideTypeHTML}${essenTag}${noteTag}`;
+      nameHTML = (note && note.name)
+        ? `${note.name} <span class="cal-special-tag">${note.tag}</span>`   // eigener Name: ohne "Rennvelo (4 Gruppen) &"
+        : `Rennvelo (4 Gruppen) &amp; ${rideTypeHTML}${essenTag}${noteTag}`;
     }
 
     tr.innerHTML = `
