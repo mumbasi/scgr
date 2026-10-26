@@ -1,0 +1,73 @@
+[
+  {
+    "date": "2026-12-01",
+    "type": "stammtisch",
+    "name": "Stammtisch",
+    "time": "19:00",
+    "location": "Kafi Otmar",
+    "desc": "Die kalte Jahreszeit ist Stammtisch-Zeit: Wir treffen uns im Kafi Otmar zum gemütlichen Austausch. Ohne Velo, ohne Route, dafür mit Zeit für Geschichten, Pläne und gute Gespräche. Das genaue Programm der Abende ist noch offen. Du hast Lust, einen Abend zu gestalten, oder eine Idee? Melde dich bei uns! Weitere Infos folgen hier, via Instagram &amp; WhatsApp."
+  },
+  {
+    "date": "2026-12-12",
+    "type": "event",
+    "name": "Wintergames II",
+    "time": "",
+    "location": "",
+    "desc": "Biathlon ohne Ski und Gewehr, dafür mit Gravelbike, Tennisball und Strafrunde. Termin und Details folgen hier, via Instagram &amp; WhatsApp."
+  },
+  {
+    "date": "2027-01-05",
+    "type": "stammtisch",
+    "name": "Stammtisch",
+    "time": "18:30",
+    "location": "Kafi Otmar",
+    "desc": "Die kalte Jahreszeit ist Stammtisch-Zeit: Wir treffen uns im Kafi Otmar zum gemütlichen Austausch. Ohne Velo, ohne Route, dafür mit Zeit für Geschichten, Pläne und gute Gespräche. Das genaue Programm der Abende ist noch offen. Du hast Lust, einen Abend zu gestalten, oder eine Idee? Melde dich bei uns! Weitere Infos folgen hier, via Instagram &amp; WhatsApp."
+  },
+  {
+    "date": "2027-01-16",
+    "type": "event",
+    "name": "Dräckscross",
+    "time": "",
+    "location": "",
+    "desc": "Das Dräckscross ist die perfekte Gelegenheit um etwas Radquer / Cyclocross Luft zu schnuppern. Die Rennstrecke ist kurz und abwechslungsreich, das Lagerfeuer gemütlich. Zeit und Treffpunkt folgen hier, via Instagram, WhatsApp &amp; Strava."
+  },
+  {
+    "date": "2027-02-02",
+    "type": "stammtisch",
+    "name": "Stammtisch",
+    "time": "18:30",
+    "location": "Kafi Otmar",
+    "desc": "Die kalte Jahreszeit ist Stammtisch-Zeit: Wir treffen uns im Kafi Otmar zum gemütlichen Austausch. Ohne Velo, ohne Route, dafür mit Zeit für Geschichten, Pläne und gute Gespräche. Das genaue Programm der Abende ist noch offen. Du hast Lust, einen Abend zu gestalten, oder eine Idee? Melde dich bei uns! Weitere Infos folgen hier, via Instagram &amp; WhatsApp."
+  },
+  {
+    "date": "2027-03-02",
+    "type": "stammtisch",
+    "name": "Stammtisch",
+    "time": "18:30",
+    "location": "Kafi Otmar",
+    "desc": "Die kalte Jahreszeit ist Stammtisch-Zeit: Wir treffen uns im Kafi Otmar zum gemütlichen Austausch. Ohne Velo, ohne Route, dafür mit Zeit für Geschichten, Pläne und gute Gespräche. Das genaue Programm der Abende ist noch offen. Du hast Lust, einen Abend zu gestalten, oder eine Idee? Melde dich bei uns! Weitere Infos folgen hier, via Instagram &amp; WhatsApp."
+  },
+  {
+    "date": "2027-03-30",
+    "type": "saisonstart",
+    "section": "Saison 2027",
+    "name": "Saisonstart 2027",
+    "time": "18:30",
+    "location": "Gallusplatz",
+    "desc": "Die Uhren sind umgestellt, die Abende werden länger: Wir starten in die Saison 2027! Treffpunkt wie gewohnt um 18:30 Uhr auf dem Gallusplatz. Weitere Infos folgen hier, via Instagram, WhatsApp &amp; Strava."
+  },
+  {
+    "date": null,
+    "dateText": "Februar 2027",
+    "type": "event",
+    "name": "Bahnfahren",
+    "desc": "Raus aus dem Alltag, rauf aufs Oval: Wir gehen Bahnfahren. Termin, Ort und Anmeldung folgen hier, via Instagram &amp; WhatsApp."
+  },
+  {
+    "date": null,
+    "dateText": "Termin folgt",
+    "type": "event",
+    "name": "Rollen-Event",
+    "desc": "Gemeinsam auf der Rolle statt allein im Keller. Termin und Details folgen hier, via Instagram &amp; WhatsApp."
+  }
+]
