@@ -784,7 +784,7 @@
 
 
   /* ─── CHARTA ─── */
-  #charta { background: var(--bg-section); }
+  #charta { background: var(--white); }
 
   .charta-intro {
     max-width: 680px;
@@ -847,7 +847,7 @@
   .accordion-content p:last-child { margin-bottom: 0; }
 
   /* ─── MERCH ─── */
-  #merch { background: var(--white); }
+  #merch { background: var(--bg-section); }
 
   .merch-grid {
     display: grid;
@@ -1191,6 +1191,19 @@
     margin-bottom: 8px;
   }
   .undated-card p { font-size: 16px; line-height: 1.7; color: var(--mid); }
+
+  /* ─── SUPPORT ─── */
+  #support { background: var(--white); }
+  .support-text { max-width: 680px; }
+  .support-text p {
+    font-size: 17px;
+    line-height: 1.8;
+    color: var(--mid);
+    margin-bottom: 16px;
+  }
+  .support-text p:last-child { margin-bottom: 0; }
+  .support-pay { margin-top: 36px; min-height: 64px; display: flex; justify-content: flex-start; text-align: left; }
+  #rnw-paylink-button-xhfvf { display: block; margin: 0; text-align: left; }
 </style>
 </head>
 <body>
@@ -1206,10 +1219,11 @@
     </div>
     <nav class="nav" id="mainNav">
       <a href="#ride">NEXT EVENT</a>
-      <a href="#groups">GRUPPEN</a>
       <a href="#program">PROGRAMM 2026/27</a>
+      <a href="#groups">GRUPPEN</a>
       <a href="#charta">CHARTA</a>
       <a href="#merch">MERCH</a>
+      <a href="#support">SUPPORT</a>
     </nav>
     <button class="hamburger" id="hamburger" aria-label="Menü öffnen">
       <span></span><span></span><span></span>
@@ -1278,6 +1292,32 @@
 </section>
 
 
+<!-- PROGRAMM -->
+<section id="program" class="section">
+  <div class="section-inner">
+    <div class="section-title">PROGRAMM <span>2026/27</span></div>
+    <table class="calendar-table">
+      <thead>
+        <tr>
+          <th>Datum</th>
+          <th>Ride</th>
+          <th class="hide-mobile">Treffpunkt</th>
+          <th class="hide-mobile">Abfahrt</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="rideCalendar"></tbody>
+    </table>
+
+    <!-- Events ohne Datum (aus events.json, "date": null) -->
+    <div class="undated" id="undatedEvents">
+      <div class="undated-title">WEITERE EVENTS <span>— Termine folgen</span></div>
+      <div class="undated-grid" id="undatedGrid"></div>
+    </div>
+  </div>
+</section>
+
+
 <!-- GRUPPEN -->
 <section id="groups" class="section">
   <div class="section-inner">
@@ -1341,32 +1381,6 @@
         </div>
       </div>
 
-    </div>
-  </div>
-</section>
-
-
-<!-- PROGRAMM -->
-<section id="program" class="section">
-  <div class="section-inner">
-    <div class="section-title">PROGRAMM <span>2026/27</span></div>
-    <table class="calendar-table">
-      <thead>
-        <tr>
-          <th>Datum</th>
-          <th>Ride</th>
-          <th class="hide-mobile">Treffpunkt</th>
-          <th class="hide-mobile">Abfahrt</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody id="rideCalendar"></tbody>
-    </table>
-
-    <!-- Events ohne Datum (aus events.json, "date": null) -->
-    <div class="undated" id="undatedEvents">
-      <div class="undated-title">WEITERE EVENTS <span>— Termine folgen</span></div>
-      <div class="undated-grid" id="undatedGrid"></div>
     </div>
   </div>
 </section>
@@ -1486,6 +1500,33 @@
 </section>
 
 
+<!-- SUPPORT -->
+<section id="support" class="section">
+  <div class="section-inner">
+    <div class="section-title">SUPPORT</div>
+    <div class="support-text">
+      <p>Wir organisieren unsere Ausfahrten und Events mit viel Herzblut und ehrenamtlichem Engagement. Wenn du unsere Arbeit unterstützen möchtest, freuen wir uns über einen freiwilligen Zustupf in unsere Kollekte. 🙌</p>
+      <p>Damit finanzieren wir Specials und kleine Extras für die Community, wichtige Ausrüstung wie Apotheken für unsere Rides oder gönnen uns als Orga-Team vielleicht auch mal ein gemeinsames Weihnachtsessen. 🎄🍝</p>
+      <p>Jeder Beitrag hilft – und natürlich gilt: Am wichtigsten ist, dass du dabei bist! 🚴‍♀️🚴‍♂️</p>
+      <p>Danke, dass du Teil unserer Community bist und den SCGR mitträgst. 🫶</p>
+    </div>
+    <div class="support-pay">
+      <div id="rnw-paylink-button-xhfvf"></div>
+      <script type="module">
+        import {TwintButton} from "https://unpkg.com/@raisenow/paylink-button@2/dist/TwintButton.js"
+        TwintButton.render("#rnw-paylink-button-xhfvf", {
+          "solution-id": "xhfvf",
+          "solution-type": "pay",
+          "language": "de",
+          "size": "large",
+          "width": "fixed",
+          "color-scheme": "dark",
+        })
+      </script>
+    </div>
+  </div>
+</section>
+
 <!-- FOOTER -->
 <footer class="footer">
   <div class="footer-inner">
@@ -1513,9 +1554,10 @@
     <div class="footer-col">
       <h4>Info</h4>
       <a href="#ride">Next Event</a>
-      <a href="#groups">Gruppen</a>
       <a href="#program">Programm 2026/27</a>
+      <a href="#groups">Gruppen</a>
       <a href="#charta">Charta</a>
+      <a href="#support">Support</a>
     </div>
   </div>
   <div class="footer-bottom">
@@ -1524,6 +1566,7 @@
     <div class="datenschutz-content">
       <p>Diese Website verwendet keine Tracking-Cookies und kein Analytics. Es werden keine persönlichen Daten durch den Besuch dieser Seite gesammelt oder gespeichert.</p>
       <p>Für die Anmeldung zu Essensplausch-Events nutzen wir Google Forms. Dabei werden die eingegebenen Daten (Name, Antworten) von Google verarbeitet. Es gelten die <a href="https://policies.google.com/privacy" target="_blank">Datenschutzbestimmungen von Google</a>. Die Anmeldedaten werden ausschliesslich zur internen Planung der Events genutzt und nicht an Dritte weitergegeben.</p>
+      <p>Für die freiwillige Unterstützung per TWINT wird der Zahlungs-Button von RaiseNow (über unpkg.com) geladen. Beim Laden des Buttons werden technisch bedingt Daten wie die IP-Adresse an diese Anbieter übertragen. Die Zahlung selbst wird von TWINT bzw. RaiseNow abgewickelt.</p>
       <p>Diese Website verlinkt auf externe Plattformen (Instagram, Strava, Komoot, WhatsApp). Für deren Inhalte und Datenschutzpraktiken sind die jeweiligen Betreiber verantwortlich.</p>
       <p>Bei Fragen: <a href="https://www.instagram.com/saint.city.group.ride" target="_blank">@saint.city.group.ride</a></p>
     </div>
@@ -1798,7 +1841,7 @@ const NEXT_RIDE_SPECIALS = [
 // replacesGravel: true → die Gravel-Runde entfällt an diesem Tag, wird durch das Special ersetzt
 const specialNotes = [
   { date: new Date(2026, 7, 25), tag: 'MTB Special', desc: 'Biken auf dem Waldeggtrail — Tipps &amp; Tricks von Mareike und Aron.', replacesGravel: true },
-  { date: new Date(2026, 9, 27), name: 'Saison Abschluss', tag: 'Special', desc: 'Gemütlicher Nightride um die Stadt, danach stossen wir gemeinsam auf ein unvergessliches Jahr an — Apéro im Kafi Otmar, ohne Anmeldung.', replacesGravel: true },
+  { date: new Date(2026, 9, 27), name: 'Saison Abschluss', tag: 'Special', desc: 'Der letzte Ride der Saison 2026. Danach stossen wir gemeinsam auf ein unvergessliches Jahr an — Apéro im Kafi Otmar, ohne Anmeldung.', replacesGravel: true },
 ];
 
 function getSpecialNote(d) {
@@ -2293,7 +2336,7 @@ function buildCalendar() {
 
       let essenBody;
       if (!essen.formUrl) {
-        essenBody = `<p>Gemütlicher Nightride um die Stadt, danach stossen wir gemeinsam auf ein unvergessliches Jahr an — Apéro im Kafi Otmar, ohne Anmeldung.</p>`;
+        essenBody = `<p>Der letzte Ride der Saison 2026. Danach stossen wir gemeinsam auf ein unvergessliches Jahr an — Apéro im Kafi Otmar, ohne Anmeldung.</p>`;
       } else if (now <= deadline) {
         essenBody = `
           <p>${essen.beschrieb || 'Nach dem Ride gibt es etwas Feines im Kafi Otmar.'} Für eine bessere Planung bitten wir dich um eine Anmeldung.</p>
