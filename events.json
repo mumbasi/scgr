@@ -57,11 +57,12 @@
     "desc": "Die Uhren sind umgestellt, die Abende werden länger: Wir starten in die Saison 2027! Treffpunkt wie gewohnt um 18:30 Uhr auf dem Gallusplatz. Weitere Infos folgen hier, via Instagram, WhatsApp &amp; Strava."
   },
   {
-    "date": null,
-    "dateText": "Februar 2027",
+    "date": "2027-03-06",
     "type": "event",
     "name": "Bahnfahren",
-    "desc": "Raus aus dem Alltag, rauf aufs Oval: Wir gehen Bahnfahren. Termin, Ort und Anmeldung folgen hier, via Instagram &amp; WhatsApp."
+    "time": "12:07",
+    "location": "Bahnhof St. Gallen",
+    "desc": "Raus aus dem Alltag, rauf aufs Oval: Wir gehen Bahnfahren in Grenche. Weitere Infos und Anmeldung folgen hier, via Instagram &amp; WhatsApp."
   },
   {
     "date": null,
