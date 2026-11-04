@@ -1191,6 +1191,24 @@
     margin-bottom: 8px;
   }
   .undated-card p { font-size: 16px; line-height: 1.7; color: var(--mid); }
+  .undated-card { display: flex; flex-direction: column; align-items: flex-start; }
+  .undated-card .undated-head { align-self: stretch; }
+  .undated-card.wide { grid-column: 1 / -1; }
+  .undated-card.wide p { max-width: 760px; }
+
+  /* Button für Events mit Anmeldung ("link" in events.json) */
+  .event-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    background: var(--accent); color: var(--black);
+    padding: 11px 22px; border-radius: 2px;
+    text-decoration: none; margin-top: 16px;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .event-btn:hover { background: #b88fc2; transform: translateY(-1px); }
+  .event-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .event-desc .event-btn, .cal-desc-inner .event-btn { display: flex; width: fit-content; }
 
   /* ─── SUPPORT ─── */
   #support { background: var(--white); }
@@ -1611,6 +1629,7 @@ let TAB_LABELS = { rennvelo: 'Rennvelo', gravel: 'Gravel' };
 //     "time": "18:30", "location": "Kafi Otmar", "desc": "...",
 //     "section": "optional: Zwischentitel im Programm",
 //     "komoot": "optional: embed-url → zeigt dann zusätzlich eine Route", "km": "..", "hm": ".." }
+//   Optional: "link": "https://…", "linkText": "Jetzt anmelden" → zeigt einen Button; "desc" darf \n für Zeilenumbrüche enthalten.
 //   Ohne Datum: { "date": null, "dateText": "Anfang Februar 2027", "type": "event", "name": "...", "desc": "..." }
 //   → erscheint im Block "Weitere Events" unter dem Programm. Sobald ein Termin fix ist:
 //     "date" setzen, "dateText" entfernen, optional "time" und "location" ergänzen.
@@ -1640,6 +1659,15 @@ function getDatedEvents() {
 function eventSection(e) {
   if (e.section) return e.section;
   return e.date > SEASON_END ? WINTER_SECTION : null;
+}
+
+// Beschreibung: Zeilenumbrüche (\n) werden zu <br>, HTML bleibt erlaubt
+function fmtDesc(t) { return String(t || '').replace(/\n/g, '<br>'); }
+
+// Optionaler Anmelde-/Info-Button: "link" (URL) und "linkText" (Beschriftung) in events.json
+function eventBtn(e) {
+  if (!e || !e.link) return '';
+  return `<a class="event-btn" href="${e.link}" target="_blank" rel="noopener">${e.linkText || 'Anmelden'} <span aria-hidden="true">→</span></a>`;
 }
 
 function locationLabel(loc) {
@@ -2108,7 +2136,7 @@ function renderEventCard(ev) {
 
   const descEl = document.getElementById('eventDesc');
   if (ev.desc) {
-    descEl.innerHTML = ev.desc;
+    descEl.innerHTML = fmtDesc(ev.desc) + eventBtn(ev);
     descEl.classList.add('visible');
   }
 
@@ -2153,7 +2181,8 @@ function appendEventRows(tbody, entry, fmtDate) {
     <td colspan="5">
       <div class="cal-desc-inner">
         <div class="cal-expand-inner show-mobile-only"><span>📍 ${locTxt}</span><span>🕐 ${timeTxt}</span></div>
-        <p>${entry.desc || ''}</p>
+        <p>${fmtDesc(entry.desc)}</p>
+        ${eventBtn(entry)}
       </div>
     </td>
   `;
@@ -2175,13 +2204,14 @@ function buildUndated() {
   document.getElementById('undatedGrid').innerHTML = list.map(e => {
     const cfg = eventCfg(e.type);
     return `
-      <div class="undated-card">
+      <div class="undated-card${String(e.desc || '').length > 250 ? ' wide' : ''}">
         <div class="undated-head">
           <span class="cal-tag ${cfg.cls}">${cfg.tag}</span>
           <span class="undated-when">${e.dateText || 'Termin folgt'}</span>
         </div>
         <h3>${e.name}</h3>
-        <p>${e.desc || ''}</p>
+        <p>${fmtDesc(e.desc)}</p>
+        ${eventBtn(e)}
       </div>`;
   }).join('');
   document.getElementById('undatedEvents').style.display = 'block';
