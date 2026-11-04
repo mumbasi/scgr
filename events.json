@@ -1,5 +1,5 @@
 [
-  {
+    {
     "date": "2026-12-01",
     "type": "stammtisch",
     "name": "Stammtisch",
@@ -13,13 +13,13 @@
     "name": "Wintergames II",
     "time": "",
     "location": "",
-    "desc": "Biathlon ohne Ski und Gewehr, dafür mit Gravelbike, Tennisball und Strafrunde. Termin und Details folgen hier, via Instagram &amp; WhatsApp."
+    "desc": "Spiel, Spass und ein bisschen Wettkampf in der kalten Jahreszeit. Termin und Details folgen hier, via Instagram &amp; WhatsApp."
   },
   {
     "date": "2027-01-12",
     "type": "stammtisch",
     "name": "Stammtisch",
-    "time": "19:00",
+    "time": "18:30",
     "location": "Kafi Otmar",
     "desc": "Die kalte Jahreszeit ist Stammtisch-Zeit: Wir treffen uns im Kafi Otmar zum gemütlichen Austausch. Ohne Velo, ohne Route, dafür mit Zeit für Geschichten, Pläne und gute Gespräche. Das genaue Programm der Abende ist noch offen. Du hast Lust, einen Abend zu gestalten, oder eine Idee? Melde dich bei uns! Weitere Infos folgen hier, via Instagram &amp; WhatsApp."
   },
@@ -35,7 +35,7 @@
     "date": "2027-02-02",
     "type": "stammtisch",
     "name": "Stammtisch",
-    "time": "19:00",
+    "time": "18:30",
     "location": "Kafi Otmar",
     "desc": "Die kalte Jahreszeit ist Stammtisch-Zeit: Wir treffen uns im Kafi Otmar zum gemütlichen Austausch. Ohne Velo, ohne Route, dafür mit Zeit für Geschichten, Pläne und gute Gespräche. Das genaue Programm der Abende ist noch offen. Du hast Lust, einen Abend zu gestalten, oder eine Idee? Melde dich bei uns! Weitere Infos folgen hier, via Instagram &amp; WhatsApp."
   },
@@ -43,7 +43,7 @@
     "date": "2027-03-02",
     "type": "stammtisch",
     "name": "Stammtisch",
-    "time": "19:00",
+    "time": "18:30",
     "location": "Kafi Otmar",
     "desc": "Die kalte Jahreszeit ist Stammtisch-Zeit: Wir treffen uns im Kafi Otmar zum gemütlichen Austausch. Ohne Velo, ohne Route, dafür mit Zeit für Geschichten, Pläne und gute Gespräche. Das genaue Programm der Abende ist noch offen. Du hast Lust, einen Abend zu gestalten, oder eine Idee? Melde dich bei uns! Weitere Infos folgen hier, via Instagram &amp; WhatsApp."
   },
@@ -60,22 +60,17 @@
     "date": "2027-03-06",
     "type": "event",
     "name": "Bahnfahren",
-    "time": "12:07",
-    "location": "Bahnhof St. Gallen",
-    "desc": "Raus aus dem Alltag, rauf aufs Oval: Wir gehen Bahnfahren in Grenche. Weitere Infos und Anmeldung folgen hier, via Instagram &amp; WhatsApp."
+    "desc": "Wir gehen ins Velodrom in Grenchen und gönnen uns einen Bahn-Schnupperkurs. Dabei haben wir die Bahn zwei Stunden für uns und bekommen eine Einführung ins Bahnfahren. Das Bahnvelo sowie bei Bedarf Schuhe und Helm sind inklusive.\n\n📅 Wann: Samstag, 6. März 2027, Kurs um 14:30 Uhr\n🚆 Treffpunkt: 12:00 Uhr beim Bahnhof St. Gallen, Abfahrt des Zuges um 12:07 Uhr\n💰 Kosten: CHF 90.– pro Person\n👥 Teilnehmende: maximal 16 Personen\n🍽️ Danach: gemütlich zusammen etwas essen und den Abend ausklingen lassen.\n\nDas Ganze macht riesigen Spass und ist eine coole Abwechslung zum Strassenvelo – egal, ob du schon Bahn-Erfahrung hast oder zum ersten Mal auf dem Oval unterwegs bist! 🤩",
+    "link": "https://tally.so/r/Ge6jaL",
+    "linkText": "Jetzt anmelden",
+    "time": "12:00",
+    "location": "Bahnhof St. Gallen"
   },
   {
     "date": null,
-    "dateText": "Februar 2027",
+    "dateText": "Termin folgt",
     "type": "event",
     "name": "Rollen-Event",
     "desc": "Gemeinsam auf der Rolle statt allein im Keller. Termin und Details folgen hier, via Instagram &amp; WhatsApp."
-  },
-    {
-    "date": null,
-    "dateText": "Termine folgen",
-    "type": "event",
-    "name": "Gravelrides",
-    "desc": "Winterliche Gravelrides und danach Aufwärmen im Kafi Otmar. Termin, Ort und Anmeldung folgen hier, via Instagram &amp; WhatsApp."
   }
 ]
