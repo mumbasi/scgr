@@ -1194,7 +1194,7 @@
   .undated-card { display: flex; flex-direction: column; align-items: flex-start; }
   .undated-card .undated-head { align-self: stretch; }
   .undated-card.wide { grid-column: 1 / -1; }
-  .undated-card.wide p { max-width: 760px; }
+  .undated-card.wide .event-body { max-width: 760px; }
 
   /* Button für Events mit Anmeldung ("link" in events.json) */
   .event-btn {
@@ -1207,6 +1207,28 @@
     transition: background 0.2s, transform 0.2s;
   }
   .event-btn:hover { background: #b88fc2; transform: translateY(-1px); }
+  .event-body { display: flex; flex-direction: column; gap: 16px; }
+  .event-body p { margin: 0; }
+  .event-facts {
+    list-style: none; margin: 4px 0; padding: 0;
+    border-top: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+  }
+  .event-facts li {
+    display: grid; grid-template-columns: 32px 150px 1fr; align-items: baseline;
+    padding: 12px 0;
+    border-bottom: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+  }
+  .ef-icon { font-size: 18px; line-height: 1; }
+  .ef-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    opacity: 0.65;
+  }
+  .ef-val { font-size: 16px; line-height: 1.5; font-weight: 500; }
+  @media (max-width: 700px) {
+    .event-facts li { grid-template-columns: 28px 1fr; row-gap: 2px; }
+    .ef-label, .ef-val { grid-column: 2; }
+  }
   .event-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
   .event-desc .event-btn, .cal-desc-inner .event-btn { display: flex; width: fit-content; }
 
@@ -1662,7 +1684,21 @@ function eventSection(e) {
 }
 
 // Beschreibung: Zeilenumbrüche (\n) werden zu <br>, HTML bleibt erlaubt
-function fmtDesc(t) { return String(t || '').replace(/\n/g, '<br>'); }
+function fmtDesc(t) {
+  // Leerzeile = neuer Absatz. Ein Block, dessen Zeilen alle mit einem Emoji beginnen
+  // ("📅 Wann: …"), wird als Faktenliste dargestellt (Icon, Label, Wert).
+  const blocks = String(t || '').split(/\n\s*\n/).map(b => b.trim()).filter(Boolean);
+  const html = blocks.map(b => {
+    const lines = b.split('\n').map(l => l.trim()).filter(Boolean);
+    const isFacts = lines.length > 1 && lines.every(l => /^\p{Extended_Pictographic}/u.test(l) && /^\S+\s+[^:]+:\s*\S/u.test(l));
+    if (!isFacts) return '<p>' + lines.join('<br>') + '</p>';
+    return '<ul class="event-facts">' + lines.map(l => {
+      const m = l.match(/^(\S+)\s+([^:]+):\s*(.*)$/u);
+      return `<li><span class="ef-icon" aria-hidden="true">${m[1]}</span><span class="ef-label">${m[2]}</span><span class="ef-val">${m[3]}</span></li>`;
+    }).join('') + '</ul>';
+  }).join('');
+  return '<div class="event-body">' + html + '</div>';
+}
 
 // Optionaler Anmelde-/Info-Button: "link" (URL) und "linkText" (Beschriftung) in events.json
 function eventBtn(e) {
@@ -2181,7 +2217,7 @@ function appendEventRows(tbody, entry, fmtDate) {
     <td colspan="5">
       <div class="cal-desc-inner">
         <div class="cal-expand-inner show-mobile-only"><span>📍 ${locTxt}</span><span>🕐 ${timeTxt}</span></div>
-        <p>${fmtDesc(entry.desc)}</p>
+        ${fmtDesc(entry.desc)}
         ${eventBtn(entry)}
       </div>
     </td>
@@ -2210,7 +2246,7 @@ function buildUndated() {
           <span class="undated-when">${e.dateText || 'Termin folgt'}</span>
         </div>
         <h3>${e.name}</h3>
-        <p>${fmtDesc(e.desc)}</p>
+        ${fmtDesc(e.desc)}
         ${eventBtn(e)}
       </div>`;
   }).join('');
